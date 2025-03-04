@@ -1,21 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaper</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: #121212;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(30, 30, 30, 0.9);
+            box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+        }
+        .navbar h1 {
+            color: #ffcc00;
+            font-size: 1.8rem;
+        }
+        /* Hamburger menu */
+        .menu-toggle {
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #ffcc00;
+            display: none;
+        }
+        .menu {
+            display: flex;
+        }
+        .menu a {
+            color: #ffcc00;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 1.2rem;
+        }
+        .menu a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 768px) {
+            .menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                background: rgba(30, 30, 30, 0.95);
+                top: 60px;
+                left: 0;
+                width: 100%;
+                padding: 10px 0;
+            }
+            .menu a {
+                margin: 10px 0;
+                display: block;
+            }
+            .menu-toggle {
+                display: block;
+            }
+        }
+        /* Sections */
+        section {
+            min-height: 100vh;  /* Fix overlapping */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 100px 20px 20px; /* Fix navbar overlap */
+            scroll-margin-top: 80px; 
+        }
+        h1 {
+            font-size: 3rem;
+            color: #ffcc00;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 1.5rem;
+            max-width: 800px;
+            line-height: 1.6;
+            opacity: 0.8;
+            word-wrap: break-word;
+        }
+        .btn {
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #121212;
+            background: #ffcc00;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background: #e6b800;
+        }
+        .footer {
+            padding: 20px;
+            font-size: 1rem;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <h1>Leaper</h1>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <div class="menu">
+            <a href="#notes">Notes</a>
+            <a href="#story">Our Story</a>
+            <a href="#other">More</a>
+        </div>
+    </div>
+
+    <!-- Section 1: Leaper Notes -->
+    <section id="notes">
+        <h1>Leaper Notes</h1>
+        <p>
+            A distraction-free, intuitive, and powerful markdown editor.  
+            Designed for creators, students, and professionals.  
+            Take notes, organize thoughts, and boost your workflow with  
+            an elegant and seamless interface.
+        </p>
+        <button class="btn" onclick="location.href='https://example.com'">Go</button>
+    </section>
+
+    <!-- Section 2: Our Story -->
+    <section id="story">
+        <h1>Our Story</h1>
+        <p>
+            Leaper was built with a vision: to provide a free, easy-to-use, and  
+            beautifully designed note-taking experience.  
+            Whether for personal use, work, or study, our mission is to  
+            help you stay organized without distractions.
+        </p>
+    </section>
+
+    <!-- Section 3: Other Features -->
     <section id="other">
         <h1>More Features</h1>
         <p><strong>Leaper Calendar:</strong> A smart, simple, and intuitive way  
             to plan your tasks and schedule. Coming soon...</p>
     </section>
-    <!<!-- Footer -->
+
+    <!-- Footer -->
     <div class="footer">
         <p>Copyright © 2023</p>
         <p>Made in India</p>
         <p>📧 <a href="mailto:ivaansri.contact@gmail.com" style="color: #ffcc00;">ivaansri.contact@gmail.com</a></p>
-        <p>▶️ <a href="https://www.youtube.com/@ivaansri1359" target="_blank" style="color: #ffcc00;">@ivaansri1359</a></p>
+        <p>▶️ <a href="https://www.youtube.com/@ivaansri1359" target="_blank" style="color: #ffcc00;">@ivaansri</a></p>
         <p>💬 Discord: <span style="color: #ffcc00;">(Update this later)</span></p>
     </div>
-    <script>
+
+    <script>
         function toggleMenu() {
             var menu = document.querySelector(".menu");
             menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
         }
     </script>
+
 </body>
-</html>
+    </html>
