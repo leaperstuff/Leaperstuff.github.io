@@ -76,16 +76,6 @@
         li:hover {
             background: #333;
         }
-        .expand-btn {
-            margin-right: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            color: #ffcc00;
-        }
-        .sub-files {
-            display: none;
-            padding-left: 15px;
-        }
         /* Main Content */
         .main-content {
             flex: 1;
@@ -99,6 +89,7 @@
             align-items: center;
             justify-content: space-between;
             border-bottom: 1px solid #333;
+            position: relative;
         }
         .nav-btn {
             background: none;
@@ -133,7 +124,29 @@
             width: 50%;
             display: block;
         }
-        /* Fix for "Both" mode spacing issue */
+        /* Dropdown Menu */
+        .dropdown-menu {
+            position: absolute;
+            right: 10px;
+            top: 40px;
+            background: #1e1e1e;
+            border: 1px solid #333;
+            display: none;
+            flex-direction: column;
+            padding: 5px;
+        }
+        .dropdown-menu button {
+            background: none;
+            border: none;
+            color: white;
+            padding: 5px;
+            cursor: pointer;
+            text-align: left;
+        }
+        .dropdown-menu.show {
+            display: flex;
+        }
+        /* Responsive Fix */
         @media (max-width: 768px) {
             .both-mode {
                 flex-direction: column;
@@ -166,6 +179,12 @@
                 <option value="both">Both</option>
             </select>
             <button class="nav-btn" onclick="toggleMenu()">⋮</button>
+            
+            <!-- Triple Dot Dropdown Menu -->
+            <div id="menu" class="dropdown-menu">
+                <button onclick="toggleAutosave()">Autosave</button>
+                <button onclick="deleteFile()">Delete</button>
+            </div>
         </div>
         <textarea id="editor" oninput="handleChange()"></textarea>
         <div id="preview"></div>
@@ -230,24 +249,24 @@
         }
 
         function updateMarkdown() {
-            let preview = document.getElementById("preview");
-            preview.innerHTML = marked.parse(document.getElementById("editor").value);
+            document.getElementById("preview").innerHTML = marked.parse(document.getElementById("editor").value);
         }
 
         function changeViewMode() {
             let editor = document.getElementById("editor");
             let preview = document.getElementById("preview");
-            let mode = document.getElementById("view-mode").value;
+            let mainContent = document.querySelector(".main-content");
 
-            if (mode === "editor") {
+            mainContent.classList.remove("both-mode");
+
+            if (document.getElementById("view-mode").value === "editor") {
                 editor.style.display = "block";
                 preview.style.display = "none";
-            } else if (mode === "markdown") {
+            } else if (document.getElementById("view-mode").value === "markdown") {
                 editor.style.display = "none";
                 preview.style.display = "block";
-                updateMarkdown();
             } else {
-                document.body.classList.add("both-mode");
+                mainContent.classList.add("both-mode");
                 editor.style.display = "block";
                 preview.style.display = "block";
             }
