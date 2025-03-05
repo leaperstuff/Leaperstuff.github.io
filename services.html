@@ -55,11 +55,16 @@
             text-align: center;
         }
         /* Services Section */
+        .section-title {
+            font-size: 1.5rem;
+            margin: 20px 0 10px;
+            color: #ffcc00;
+        }
         .services-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            padding: 20px;
+            padding: 10px;
         }
         .card {
             background: rgba(30, 30, 30, 0.9);
@@ -69,6 +74,7 @@
             width: 300px;
             text-align: center;
             box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+            position: relative;
         }
         .card h2 {
             color: #ffcc00;
@@ -94,6 +100,21 @@
         .btn:hover {
             background: #e6b800;
         }
+        /* Heart (Pin) Icon */
+        .heart {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .heart.pinned {
+            color: #888; /* Grey heart for pinned */
+        }
+        .heart.unpinned {
+            color: #ff3333; /* Red heart for unpinned */
+        }
         /* Footer */
         .footer {
             padding: 20px;
@@ -117,16 +138,27 @@
         <input type="text" id="search" placeholder="Search services..." onkeyup="filterServices()">
     </div>
 
-    <!-- Services -->
-    <div class="services-container" id="services-list">
-        <div class="card" data-name="Leaper Notes">
-            <h2>Leaper Notes</h2>
-            <p>A distraction-free, intuitive, and powerful markdown editor.</p>
-            <button class="btn" onclick="location.href='editor.html'">Go</button>
-        </div>
-        <div class="card" data-name="Leaper Calendar">
-            <h2>Leaper Calendar</h2>
-            <p>A smart, simple, and intuitive way to plan your tasks and schedule. (Work in progress)</p>
+    <!-- Pinned Services -->
+    <div id="pinned-section">
+        <h2 class="section-title">Pinned</h2>
+        <div class="services-container" id="pinned-services"></div>
+    </div>
+
+    <!-- All Services -->
+    <div id="all-section">
+        <h2 class="section-title">All</h2>
+        <div class="services-container" id="all-services">
+            <div class="card" data-name="Leaper Notes">
+                <span class="heart" onclick="togglePin('Leaper Notes', this)">❤️</span>
+                <h2>Leaper Notes</h2>
+                <p>A distraction-free, intuitive, and powerful markdown editor.</p>
+                <button class="btn" onclick="location.href='editor.html'">Go</button>
+            </div>
+            <div class="card" data-name="Leaper Calendar">
+                <span class="heart" onclick="togglePin('Leaper Calendar', this)">❤️</span>
+                <h2>Leaper Calendar</h2>
+                <p>A smart, simple, and intuitive way to plan your tasks and schedule. (Work in progress)</p>
+            </div>
         </div>
     </div>
 
@@ -141,13 +173,54 @@
 
     <script>
         function filterServices() {
-            var input = document.getElementById("search").value.toLowerCase();
-            var cards = document.querySelectorAll(".card");
-            cards.forEach(function(card) {
-                var name = card.getAttribute("data-name").toLowerCase();
+            let input = document.getElementById("search").value.toLowerCase();
+            document.querySelectorAll(".card").forEach(card => {
+                let name = card.getAttribute("data-name").toLowerCase();
                 card.style.display = name.includes(input) ? "block" : "none";
             });
         }
+
+        function togglePin(serviceName, heartIcon) {
+            let pinnedServices = JSON.parse(localStorage.getItem("pinnedServices")) || [];
+
+            if (pinnedServices.includes(serviceName)) {
+                pinnedServices = pinnedServices.filter(name => name !== serviceName);
+            } else {
+                pinnedServices.push(serviceName);
+            }
+
+            localStorage.setItem("pinnedServices", JSON.stringify(pinnedServices));
+            renderServices();
+        }
+
+        function renderServices() {
+            let pinnedServices = JSON.parse(localStorage.getItem("pinnedServices")) || [];
+            let allCards = Array.from(document.querySelectorAll(".card"));
+            let pinnedContainer = document.getElementById("pinned-services");
+            let allContainer = document.getElementById("all-services");
+
+            pinnedContainer.innerHTML = "";
+            allContainer.innerHTML = "";
+
+            allCards.forEach(card => {
+                let serviceName = card.getAttribute("data-name");
+                let heartIcon = card.querySelector(".heart");
+
+                if (pinnedServices.includes(serviceName)) {
+                    heartIcon.innerText = "🩶";
+                    heartIcon.classList.add("pinned");
+                    heartIcon.classList.remove("unpinned");
+                    pinnedContainer.appendChild(card);
+                } else {
+                    heartIcon.innerText = "❤️";
+                    heartIcon.classList.add("unpinned");
+                    heartIcon.classList.remove("pinned");
+                    allContainer.appendChild(card);
+                }
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", renderServices);
     </script>
 
 </body>
