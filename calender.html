@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaper Calendar</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background: #121212;
+            color: #fff;
+            text-align: center;
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            background: rgba(30, 30, 30, 0.9);
+            box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+        }
+        .navbar h1 {
+            color: #ffcc00;
+            font-size: 1.8rem;
+        }
+        .container {
+            display: flex;
+            min-height: 100vh;
+            padding-top: 60px;
+        }
+        .sidebar {
+            width: 250px;
+            background: rgba(30, 30, 30, 0.9);
+            padding: 20px;
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 60px;
+            transition: 0.3s;
+        }
+        .sidebar select, .sidebar button {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            background: #1e1e1e;
+            color: #ffcc00;
+            border: 1px solid #ffcc00;
+            border-radius: 5px;
+        }
+        .content {
+            flex: 1;
+            margin-left: 250px;
+            padding: 20px;
+        }
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .calendar-header h2 {
+            color: #ffcc00;
+        }
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        .day {
+            padding: 20px;
+            background: #1e1e1e;
+            border: 1px solid #ffcc00;
+            cursor: pointer;
+        }
+        .day:hover {
+            background: #ffcc00;
+            color: #121212;
+        }
+        .plus-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #ffcc00;
+            color: #121212;
+            font-size: 24px;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+        }
+        .event-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            display: none;
+            flex-direction: column;
+            width: 300px;
+            z-index: 1000;
+        }
+        .event-popup input, .event-popup select, .event-popup button {
+            margin: 5px 0;
+            padding: 10px;
+            width: 100%;
+            background: #1e1e1e;
+            color: #ffcc00;
+            border: 1px solid #ffcc00;
+            border-radius: 5px;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <h1>Leaper Calendar</h1>
+    </div>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <select id="dayDropdown"></select>
+            <select id="monthDropdown"></select>
+            <select id="yearDropdown"></select>
+            <button onclick="openSettings()">⚙️ Settings</button>
+        </div>
+
+        <!-- Main Calendar -->
+        <div class="content">
+            <div class="calendar-header">
+                <h2 id="currentDate"></h2>
+                <button class="btn" onclick="changeView()">Change View</button>
+            </div>
+            <div class="calendar" id="calendar"></div>
+        </div>
+    </div>
+
+    <!-- Add Event Button -->
+    <button class="plus-btn" onclick="openEventPopup()">+</button>
+
+    <!-- Event Popup -->
+    <div class="overlay" id="overlay"></div>
+    <div class="event-popup" id="eventPopup">
+        <h3>Add Event</h3>
+        <input type="text" id="eventName" placeholder="Event Name">
+        <input type="text" id="eventDesc" placeholder="Description">
+        <select id="eventDay"></select>
+        <select id="eventMonth"></select>
+        <select id="eventYear"></select>
+        <label><input type="checkbox" id="allDayToggle"> All Day</label>
+        <select id="eventTime" disabled>
+            <option>12:00 AM</option>
+            <option>12:30 AM</option>
+            <option>1:00 AM</option>
+            <!-- More times... -->
+        </select>
+        <label><input type="checkbox" id="notifToggle"> Notification</label>
+        <select id="notifTime">
+            <option>30 mins before</option>
+            <option>15 mins before</option>
+            <option>On start</option>
+            <option>Custom</option>
+        </select>
+        <button onclick="saveEvent()">Save</button>
+        <button onclick="closeEventPopup()">Cancel</button>
+    </div>
+
+    <script>
+        function updateDate() {
+            document.getElementById("currentDate").innerText = new Date().toDateString();
+        }
+        updateDate();
+
+        function openEventPopup() {
+            document.getElementById("eventPopup").style.display = "flex";
+            document.getElementById("overlay").style.display = "block";
+        }
+        function closeEventPopup() {
+            document.getElementById("eventPopup").style.display = "none";
+            document.getElementById("overlay").style.display = "none";
+        }
+
+        function saveEvent() {
+            alert("Event Saved! (Functionality coming soon)");
+            closeEventPopup();
+        }
+
+        function openSettings() {
+            alert("Settings (Coming Soon)");
+        }
+
+        function changeView() {
+            alert("View Change (Coming Soon)");
+        }
+
+        function populateCalendar() {
+            let calendar = document.getElementById("calendar");
+            calendar.innerHTML = "";
+            for (let i = 1; i <= 30; i++) {
+                let day = document.createElement("div");
+                day.classList.add("day");
+                day.innerText = i;
+                day.onclick = openEventPopup;
+                calendar.appendChild(day);
+            }
+        }
+        populateCalendar();
+    </script>
+
+</body>
+</html>
