@@ -5,67 +5,82 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LeaperTasks</title>
     <style>
-        * {
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #222;
+            color: #fff;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        body {
-            background-color: #121212;
-            color: #fff;
+        .header {
+            background-color: #FFD700;
+            color: #222;
+            width: 100%;
             text-align: center;
+            padding: 10px;
+            font-size: 24px;
+            font-weight: bold;
         }
-        .container {
-            max-width: 500px;
-            margin: 20px auto;
-            padding: 20px;
-            background: #1e1e1e;
-            border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
-        }
-        h1 {
-            color: #ffcc00;
+        .task-container {
+            width: 90%;
+            max-width: 400px;
+            margin-top: 20px;
         }
         .task {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: #292929;
+            background: #333;
             padding: 10px;
-            border-radius: 5px;
             margin: 10px 0;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
         }
         .priority {
             padding: 5px 10px;
-            border-radius: 5px;
+            border-radius: 3px;
             font-weight: bold;
+            display: inline-block;
+            margin-bottom: 5px;
         }
         .high { background: red; }
         .medium { background: orange; }
         .low { background: green; }
-        .delete-btn, .edit-btn {
-            cursor: pointer;
+        .task-buttons {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10px;
+        }
+        .task-buttons button {
+            border: none;
             padding: 5px 10px;
             margin-left: 5px;
-            border: none;
-            color: white;
-            font-weight: bold;
-            border-radius: 5px;
+            cursor: pointer;
+            border-radius: 3px;
         }
-        .delete-btn { background: #ff4d4d; }
-        .edit-btn { background: #4d88ff; }
-        .floating-btn {
+        .delete-btn {
+            background: red;
+            color: white;
+        }
+        .edit-btn {
+            background: yellow;
+            color: black;
+        }
+        .add-task-btn {
+            background: #FFD700;
+            color: #222;
+            padding: 10px;
+            font-size: 18px;
+            border-radius: 50%;
+            border: none;
+            cursor: pointer;
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background: #ffcc00;
-            color: #121212;
-            padding: 15px;
-            border-radius: 50%;
-            font-size: 1.5rem;
-            cursor: pointer;
-            box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2);
+            width: 50px;
+            height: 50px;
         }
         .popup {
             display: none;
@@ -73,104 +88,114 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: #292929;
+            background: #444;
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2);
+            text-align: center;
             width: 300px;
         }
         .popup input, .popup select {
-            width: 100%;
+            width: 90%;
+            padding: 5px;
             margin: 5px 0;
-            padding: 8px;
-            border: none;
-            border-radius: 5px;
         }
         .popup button {
             margin-top: 10px;
-            padding: 8px;
-            width: 48%;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            border-radius: 5px;
         }
-        .save-btn { background: #ffcc00; color: black; }
-        .cancel-btn { background: gray; color: white; }
     </style>
 </head>
-<body><br>
+<body>
 
-    <h1>LeaperTasks</h1>
-    <div class="container" id="task-list"></div>
+    <div class="header">LeaperTasks</div>
+    
+    <div class="task-container" id="taskList"></div>
+    
+    <button class="add-task-btn" onclick="openPopup()">+</button>
 
-    <div class="floating-btn" onclick="showPopup()">+</div>
-
-    <div class="popup" id="popup">
-        <h2>Add Task</h2>
-        <input type="text" id="taskName" placeholder="Task Name" required>
-        <input type="text" id="taskDescription" placeholder="Description (Optional)">
-        <input type="date" id="taskDate">
-        <input type="time" id="taskTime">
+    <div class="popup" id="taskPopup">
+        <h3>Add Task</h3>
+        <input type="text" id="taskName" placeholder="Task Name *">
+        <textarea id="taskDesc" placeholder="Description (Optional)"></textarea>
+        <input type="datetime-local" id="taskTime">
         <select id="taskPriority">
             <option value="high">High</option>
             <option value="medium">Medium</option>
             <option value="low">Low</option>
         </select>
-        <button class="save-btn" onclick="saveTask()">Save</button>
-        <button class="cancel-btn" onclick="hidePopup()">Cancel</button>
+        <button onclick="saveTask()">Save</button>
+        <button onclick="closePopup()">Cancel</button>
     </div>
 
     <script>
-        function showPopup() {
-            document.getElementById("popup").style.display = "block";
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+        function openPopup() {
+            document.getElementById("taskPopup").style.display = "block";
         }
 
-        function hidePopup() {
-            document.getElementById("popup").style.display = "none";
+        function closePopup() {
+            document.getElementById("taskPopup").style.display = "none";
         }
 
         function saveTask() {
             let name = document.getElementById("taskName").value;
-            let description = document.getElementById("taskDescription").value;
-            let date = document.getElementById("taskDate").value || "No date";
-            let time = document.getElementById("taskTime").value || "No time";
+            let desc = document.getElementById("taskDesc").value;
+            let time = document.getElementById("taskTime").value;
             let priority = document.getElementById("taskPriority").value;
-
+            
             if (!name) {
                 alert("Task Name is required!");
                 return;
             }
 
-            let taskList = document.getElementById("task-list");
-            let task = document.createElement("div");
-            task.classList.add("task");
-
-            task.innerHTML = `
-                <span class="priority ${priority}">${priority.charAt(0).toUpperCase() + priority.slice(1)}</span>
-                <span>${name} - ${time} ${date !== "No date" ? "on " + date : ""}</span>
-                <button class="edit-btn" onclick="editTask(this)">Edit</button>
-                <button class="delete-btn" onclick="this.parentElement.remove()">Delete</button>
-            `;
-
-            taskList.appendChild(task);
-            hidePopup();
+            tasks.push({ name, desc, time, priority });
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+            closePopup();
+            renderTasks();
         }
 
-        function editTask(button) {
-            let task = button.parentElement;
-            let details = task.children[1].textContent.split(" - ");
-            let name = details[0];
-            let time = details[1].split(" on ")[0] || "";
-            let date = details[1].split(" on ")[1] || "";
-
-            document.getElementById("taskName").value = name;
-            document.getElementById("taskDate").value = date;
-            document.getElementById("taskTime").value = time;
-
-            task.remove();
-            showPopup();
+        function deleteTask(index) {
+            tasks.splice(index, 1);
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+            renderTasks();
         }
+
+        function editTask(index) {
+            let task = tasks[index];
+            document.getElementById("taskName").value = task.name;
+            document.getElementById("taskDesc").value = task.desc;
+            document.getElementById("taskTime").value = task.time;
+            document.getElementById("taskPriority").value = task.priority;
+
+            deleteTask(index);
+            openPopup();
+        }
+
+        function renderTasks() {
+            let taskList = document.getElementById("taskList");
+            taskList.innerHTML = "";
+            tasks.forEach((task, index) => {
+                let taskElement = document.createElement("div");
+                taskElement.classList.add("task");
+
+                let priorityClass = task.priority === "high" ? "high" : task.priority === "medium" ? "medium" : "low";
+
+                taskElement.innerHTML = `
+                    <div class="priority ${priorityClass}">${task.priority.toUpperCase()}</div>
+                    <div><strong>${task.name}</strong></div>
+                    <div>${task.desc ? task.desc : ""}</div>
+                    <div>${task.time ? "Time: " + task.time : ""}</div>
+                    <div class="task-buttons">
+                        <button class="edit-btn" onclick="editTask(${index})">Edit</button>
+                        <button class="delete-btn" onclick="deleteTask(${index})">Delete</button>
+                    </div>
+                `;
+
+                taskList.appendChild(taskElement);
+            });
+        }
+
+        renderTasks();
     </script>
 
 </body>
