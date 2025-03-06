@@ -12,98 +12,164 @@
             font-family: Arial, sans-serif;
         }
         body {
-            background: #121212;
-            color: white;
+            background-color: #121212;
+            color: #fff;
             text-align: center;
+        }
+        .container {
+            max-width: 500px;
+            margin: 20px auto;
             padding: 20px;
+            background: #1e1e1e;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
         }
         h1 {
             color: #ffcc00;
-        }
-        .task-container {
-            max-width: 400px;
-            margin: 20px auto;
-            background: #1e1e1e;
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
-        }
-        input, select, button {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border: none;
-            border-radius: 5px;
-        }
-        button {
-            background: #ffcc00;
-            color: #121212;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        button:hover {
-            background: #e6b800;
-        }
-        .task-list {
-            margin-top: 20px;
-            text-align: left;
         }
         .task {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background: #222;
+            background: #292929;
             padding: 10px;
             border-radius: 5px;
-            margin-bottom: 10px;
+            margin: 10px 0;
         }
         .priority {
-            font-weight: bold;
             padding: 5px 10px;
             border-radius: 5px;
-            color: white;
+            font-weight: bold;
         }
         .high { background: red; }
         .medium { background: orange; }
         .low { background: green; }
+        .delete-btn, .edit-btn {
+            cursor: pointer;
+            padding: 5px 10px;
+            margin-left: 5px;
+            border: none;
+            color: white;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+        .delete-btn { background: #ff4d4d; }
+        .edit-btn { background: #4d88ff; }
+        .floating-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #ffcc00;
+            color: #121212;
+            padding: 15px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2);
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #292929;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(255, 255, 255, 0.2);
+            width: 300px;
+        }
+        .popup input, .popup select {
+            width: 100%;
+            margin: 5px 0;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+        }
+        .popup button {
+            margin-top: 10px;
+            padding: 8px;
+            width: 48%;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 5px;
+        }
+        .save-btn { background: #ffcc00; color: black; }
+        .cancel-btn { background: gray; color: white; }
     </style>
 </head>
-<body>
+<body><br>
 
     <h1>LeaperTasks</h1>
-    
-    <div class="task-container">
-        <input type="text" id="taskInput" placeholder="Enter task name">
-        <select id="priority">
-            <option value="high">High 🔴</option>
-            <option value="medium">Medium 🟠</option>
-            <option value="low">Low 🟢</option>
+    <div class="container" id="task-list"></div>
+
+    <div class="floating-btn" onclick="showPopup()">+</div>
+
+    <div class="popup" id="popup">
+        <h2>Add Task</h2>
+        <input type="text" id="taskName" placeholder="Task Name" required>
+        <input type="text" id="taskDescription" placeholder="Description (Optional)">
+        <input type="date" id="taskDate">
+        <input type="time" id="taskTime">
+        <select id="taskPriority">
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
         </select>
-        <button onclick="addTask()">Add Task</button>
+        <button class="save-btn" onclick="saveTask()">Save</button>
+        <button class="cancel-btn" onclick="hidePopup()">Cancel</button>
     </div>
 
-    <div class="task-list" id="taskList"></div>
-
     <script>
-        function addTask() {
-            let taskName = document.getElementById("taskInput").value;
-            let priority = document.getElementById("priority").value;
+        function showPopup() {
+            document.getElementById("popup").style.display = "block";
+        }
 
-            if (taskName.trim() === "") return;
+        function hidePopup() {
+            document.getElementById("popup").style.display = "none";
+        }
 
-            let taskList = document.getElementById("taskList");
-            let taskItem = document.createElement("div");
-            taskItem.classList.add("task");
+        function saveTask() {
+            let name = document.getElementById("taskName").value;
+            let description = document.getElementById("taskDescription").value;
+            let date = document.getElementById("taskDate").value || "No date";
+            let time = document.getElementById("taskTime").value || "No time";
+            let priority = document.getElementById("taskPriority").value;
 
-            let priorityClass = priority === "high" ? "high" : priority === "medium" ? "medium" : "low";
-            
-            taskItem.innerHTML = `
-                <span>${taskName}</span>
-                <span class="priority ${priorityClass}">${priority.charAt(0).toUpperCase() + priority.slice(1)}</span>
+            if (!name) {
+                alert("Task Name is required!");
+                return;
+            }
+
+            let taskList = document.getElementById("task-list");
+            let task = document.createElement("div");
+            task.classList.add("task");
+
+            task.innerHTML = `
+                <span class="priority ${priority}">${priority.charAt(0).toUpperCase() + priority.slice(1)}</span>
+                <span>${name} - ${time} ${date !== "No date" ? "on " + date : ""}</span>
+                <button class="edit-btn" onclick="editTask(this)">Edit</button>
+                <button class="delete-btn" onclick="this.parentElement.remove()">Delete</button>
             `;
 
-            taskList.appendChild(taskItem);
-            document.getElementById("taskInput").value = "";
+            taskList.appendChild(task);
+            hidePopup();
+        }
+
+        function editTask(button) {
+            let task = button.parentElement;
+            let details = task.children[1].textContent.split(" - ");
+            let name = details[0];
+            let time = details[1].split(" on ")[0] || "";
+            let date = details[1].split(" on ")[1] || "";
+
+            document.getElementById("taskName").value = name;
+            document.getElementById("taskDate").value = date;
+            document.getElementById("taskTime").value = time;
+
+            task.remove();
+            showPopup();
         }
     </script>
 
