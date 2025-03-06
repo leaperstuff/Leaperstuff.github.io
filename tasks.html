@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeaperTasks</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            background: #121212;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #ffcc00;
+        }
+        .task-container {
+            max-width: 400px;
+            margin: 20px auto;
+            background: #1e1e1e;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+        }
+        input, select, button {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: none;
+            border-radius: 5px;
+        }
+        button {
+            background: #ffcc00;
+            color: #121212;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #e6b800;
+        }
+        .task-list {
+            margin-top: 20px;
+            text-align: left;
+        }
+        .task {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #222;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .priority {
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: white;
+        }
+        .high { background: red; }
+        .medium { background: orange; }
+        .low { background: green; }
+    </style>
+</head>
+<body>
+
+    <h1>LeaperTasks</h1>
+    
+    <div class="task-container">
+        <input type="text" id="taskInput" placeholder="Enter task name">
+        <select id="priority">
+            <option value="high">High 🔴</option>
+            <option value="medium">Medium 🟠</option>
+            <option value="low">Low 🟢</option>
+        </select>
+        <button onclick="addTask()">Add Task</button>
+    </div>
+
+    <div class="task-list" id="taskList"></div>
+
+    <script>
+        function addTask() {
+            let taskName = document.getElementById("taskInput").value;
+            let priority = document.getElementById("priority").value;
+
+            if (taskName.trim() === "") return;
+
+            let taskList = document.getElementById("taskList");
+            let taskItem = document.createElement("div");
+            taskItem.classList.add("task");
+
+            let priorityClass = priority === "high" ? "high" : priority === "medium" ? "medium" : "low";
+            
+            taskItem.innerHTML = `
+                <span>${taskName}</span>
+                <span class="priority ${priorityClass}">${priority.charAt(0).toUpperCase() + priority.slice(1)}</span>
+            `;
+
+            taskList.appendChild(taskItem);
+            document.getElementById("taskInput").value = "";
+        }
+    </script>
+
+</body>
+</html>
