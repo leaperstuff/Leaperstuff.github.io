@@ -23,12 +23,7 @@
             width: 100%;
             padding: 15px;
             background: rgba(30, 30, 30, 0.9);
-            box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
             z-index: 1000;
-        }
-        .navbar h1 {
-            color: #ffcc00;
-            font-size: 1.8rem;
         }
         .container {
             display: flex;
@@ -43,7 +38,6 @@
             position: fixed;
             left: 0;
             top: 60px;
-            transition: 0.3s;
         }
         .sidebar select, .sidebar button {
             width: 100%;
@@ -59,15 +53,6 @@
             margin-left: 250px;
             padding: 20px;
         }
-        .calendar-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        .calendar-header h2 {
-            color: #ffcc00;
-        }
         .calendar {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -78,10 +63,16 @@
             background: #1e1e1e;
             border: 1px solid #ffcc00;
             cursor: pointer;
+            position: relative;
         }
-        .day:hover {
-            background: #ffcc00;
-            color: #121212;
+        .event-dot {
+            width: 10px;
+            height: 10px;
+            background: red;
+            border-radius: 50%;
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
         }
         .plus-btn {
             position: fixed;
@@ -137,28 +128,20 @@
     </div>
 
     <div class="container">
-        <!-- Sidebar -->
         <div class="sidebar">
-            <select id="dayDropdown"></select>
-            <select id="monthDropdown"></select>
-            <select id="yearDropdown"></select>
+            <select id="monthDropdown" onchange="generateCalendar()"></select>
+            <select id="yearDropdown" onchange="generateCalendar()"></select>
             <button onclick="openSettings()">⚙️ Settings</button>
         </div>
 
-        <!-- Main Calendar -->
         <div class="content">
-            <div class="calendar-header">
-                <h2 id="currentDate"></h2>
-                <button class="btn" onclick="changeView()">Change View</button>
-            </div>
+            <h2 id="currentDate"></h2>
             <div class="calendar" id="calendar"></div>
         </div>
     </div>
 
-    <!-- Add Event Button -->
     <button class="plus-btn" onclick="openEventPopup()">+</button>
 
-    <!-- Event Popup -->
     <div class="overlay" id="overlay"></div>
     <div class="event-popup" id="eventPopup">
         <h3>Add Event</h3>
@@ -167,64 +150,82 @@
         <select id="eventDay"></select>
         <select id="eventMonth"></select>
         <select id="eventYear"></select>
-        <label><input type="checkbox" id="allDayToggle"> All Day</label>
-        <select id="eventTime" disabled>
-            <option>12:00 AM</option>
-            <option>12:30 AM</option>
-            <option>1:00 AM</option>
-            <!-- More times... -->
-        </select>
+        <label><input type="checkbox" id="allDayToggle" onchange="toggleTime()"> All Day</label>
+        <input type="time" id="eventTime">
         <label><input type="checkbox" id="notifToggle"> Notification</label>
         <select id="notifTime">
-            <option>30 mins before</option>
-            <option>15 mins before</option>
-            <option>On start</option>
-            <option>Custom</option>
+            <option value="30">30 mins before</option>
+            <option value="15">15 mins before</option>
+            <option value="0">On start</option>
         </select>
         <button onclick="saveEvent()">Save</button>
         <button onclick="closeEventPopup()">Cancel</button>
     </div>
 
     <script>
-        function updateDate() {
-            document.getElementById("currentDate").innerText = new Date().toDateString();
+        function generateCalendar() {
+            let month = document.getElementById("monthDropdown").value;
+            let year = document.getElementById("yearDropdown").value;
+            let daysInMonth = new Date(year, month, 0).getDate();
+            let calendar = document.getElementById("calendar");
+            calendar.innerHTML = "";
+            for (let i = 1; i <= daysInMonth; i++) {
+                let day = document.createElement("div");
+                day.classList.add("day");
+                day.innerText = i;
+                day.onclick = () => openEventPopup(i);
+                if (localStorage.getItem(`${year}-${month}-${i}`)) {
+                    let dot = document.createElement("div");
+                    dot.classList.add("event-dot");
+                    day.appendChild(dot);
+                }
+                calendar.appendChild(day);
+            }
         }
-        updateDate();
 
-        function openEventPopup() {
+        function openEventPopup(day = null) {
             document.getElementById("eventPopup").style.display = "flex";
             document.getElementById("overlay").style.display = "block";
+            if (day) document.getElementById("eventDay").value = day;
         }
+
         function closeEventPopup() {
             document.getElementById("eventPopup").style.display = "none";
             document.getElementById("overlay").style.display = "none";
         }
 
         function saveEvent() {
-            alert("Event Saved! (Functionality coming soon)");
+            let name = document.getElementById("eventName").value;
+            let desc = document.getElementById("eventDesc").value;
+            let day = document.getElementById("eventDay").value;
+            let month = document.getElementById("eventMonth").value;
+            let year = document.getElementById("eventYear").value;
+            let time = document.getElementById("eventTime").value;
+            let notify = document.getElementById("notifToggle").checked ? document.getElementById("notifTime").value : null;
+
+            localStorage.setItem(`${year}-${month}-${day}`, JSON.stringify({ name, desc, time, notify }));
             closeEventPopup();
+            generateCalendar();
+            alert("Event saved!");
+        }
+
+        function toggleTime() {
+            document.getElementById("eventTime").disabled = document.getElementById("allDayToggle").checked;
         }
 
         function openSettings() {
             alert("Settings (Coming Soon)");
         }
 
-        function changeView() {
-            alert("View Change (Coming Soon)");
+        function loadDropdowns() {
+            let monthDropdown = document.getElementById("monthDropdown");
+            let yearDropdown = document.getElementById("yearDropdown");
+            for (let i = 1; i <= 12; i++) monthDropdown.innerHTML += `<option value="${i}">${i}</option>`;
+            for (let i = 2020; i <= 2030; i++) yearDropdown.innerHTML += `<option value="${i}">${i}</option>`;
         }
 
-        function populateCalendar() {
-            let calendar = document.getElementById("calendar");
-            calendar.innerHTML = "";
-            for (let i = 1; i <= 30; i++) {
-                let day = document.createElement("div");
-                day.classList.add("day");
-                day.innerText = i;
-                day.onclick = openEventPopup;
-                calendar.appendChild(day);
-            }
-        }
-        populateCalendar();
+        loadDropdowns();
+        generateCalendar();
     </script>
 
 </body>
