@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Information Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: black;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: #222;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+            text-align: left;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: none;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            font-size: 18px;
+            background-color: gold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: darkgoldenrod;
+        }
+    </style>
+</head>
+<body>
+    <h2>Complete Your Personal Information</h2>
+    <form class="container">
+        <label>Full Name:
+            <input type="text" placeholder="Enter your full name" required>
+        </label>
+
+        <label>Email:
+            <input type="email" placeholder="Enter your email" required>
+        </label>
+
+        <label>Password:
+            <input type="password" placeholder="Enter a strong password" minlength="8" required>
+        </label>
+
+        <label>Phone Number:
+            <input type="tel" placeholder="Enter phone (10 digits)" pattern="[0-9]{10}" required>
+        </label>
+
+        <label>Date of Birth:
+            <input type="date" required>
+        </label>
+
+        <label>Time of Birth:
+            <input type="time">
+        </label>
+
+        <label>Gender:
+            <select required>
+                <option value="">Select</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+            </select>
+        </label>
+
+        <label>Nationality:
+            <input type="text" placeholder="Enter your nationality" required>
+        </label>
+
+        <label>Country:
+            <select required>
+                <option value="">Select</option>
+                <option value="IN">India</option>
+                <option value="US">United States</option>
+                <option value="UK">United Kingdom</option>
+                <option value="CA">Canada</option>
+                <option value="AU">Australia</option>
+            </select>
+        </label>
+
+        <label>Aadhaar/SSN/ID Number:
+            <input type="text" placeholder="Enter your ID number" required>
+        </label>
+
+        <label>Address:
+            <textarea placeholder="Enter your full address" required></textarea>
+        </label>
+
+        <label>PIN Code (6 digits only):
+            <input type="text" pattern="\d{6}" placeholder="Enter 6-digit PIN" required>
+        </label>
+
+        <label>Education Level:
+            <select required>
+                <option value="">Select</option>
+                <option value="High School">High School</option>
+                <option value="Undergraduate">Undergraduate</option>
+                <option value="Postgraduate">Postgraduate</option>
+                <option value="Doctorate">Doctorate</option>
+            </select>
+        </label>
+
+        <label>Occupation:
+            <input type="text" placeholder="Enter your occupation" required>
+        </label>
+
+        <label>Annual Income:
+            <input type="number" placeholder="Enter your income" min="0" required>
+        </label>
+
+        <label>Marital Status:
+            <select required>
+                <option value="">Select</option>
+                <option value="Single">Single</option>
+                <option value="Married">Married</option>
+                <option value="Divorced">Divorced</option>
+                <option value="Widowed">Widowed</option>
+            </select>
+        </label>
+
+        <label>Favorite Color:
+            <input type="color">
+        </label>
+
+        <label>Emergency Contact Name:
+            <input type="text" placeholder="Enter emergency contact name" required>
+        </label>
+
+        <label>Emergency Contact Number:
+            <input type="tel" placeholder="Enter emergency contact number" pattern="[0-9]{10}" required>
+        </label>
+
+        <label>Medical Conditions (if any):
+            <textarea placeholder="Enter any medical conditions"></textarea>
+        </label>
+
+        <label>Profile Picture:
+            <input type="file" required>
+        </label>
+
+        <label>Website:
+            <input type="url" placeholder="Enter your website URL">
+        </label>
+
+        <label>Search Something:
+            <input type="search" placeholder="Search...">
+        </label>
+
+        <label>Experience Level (0-10):
+            <input type="range" min="0" max="10">
+        </label>
+
+        <label>Verification PIN (4 digits only):
+            <input type="text" pattern="\d{4}" placeholder="Enter 4-digit PIN" required>
+        </label>
+
+        <label>Agree to Terms:
+            <input type="checkbox" required> I agree that all details provided are true
+        </label>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <p style="margin-top: 20px; font-size: 14px; color: gray;">
+        These details are required but never saved.
+    </p>
+</body>
+</html>
