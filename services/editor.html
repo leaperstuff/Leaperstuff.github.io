@@ -6,28 +6,7 @@
     <title>LeaperNotes</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
     <link rel="icon" href="images/notepad.webp" />
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-        body { display: flex; height: 100vh; background: #121212; color: white; overflow: hidden; }
-        .sidebar { width: 250px; background: #1e1e1e; padding: 10px; transition: 0.3s; }
-        .sidebar.hidden { width: 0; padding: 0; overflow: hidden; }
-        .sidebar-header { display: flex; justify-content: space-between; font-size: 1.5rem; color: #ffcc00; }
-        .search-bar { width: 100%; padding: 6px; background: #333; color: #fff; border: none; border-radius: 5px; outline: none; margin: 10px 0; }
-        ul { list-style: none; flex: 1; overflow-y: auto; padding: 5px; }
-        li { padding: 8px; border-bottom: 1px solid #333; cursor: pointer; display: flex; justify-content: space-between; }
-        li:hover { background: #333; }
-        .main-content { flex: 1; display: flex; flex-direction: column; }
-        .navbar { background: #1e1e1e; padding: 10px; display: flex; justify-content: space-between; border-bottom: 1px solid #333; }
-        .nav-btn, .menu button { background: none; border: none; color: #ffcc00; font-size: 1.2rem; cursor: pointer; }
-        #editor, #preview { flex: 1; padding: 15px; background: #222; border: none; outline: none; resize: none; display: none; color: #fff; } /* Editor text is now white */
-        #editor { display: block; font-size: 1rem; }
-        .both-mode { display: flex; }
-        .both-mode #editor, .both-mode #preview { width: 50%; display: block; }
-        select { background: #333; color: #ffcc00; border: 1px solid #444; padding: 5px; border-radius: 5px; cursor: pointer; }
-        .menu { display: none; position: absolute; background: #1e1e1e; border: 1px solid #333; padding: 10px; right: 10px; top: 50px; width: 150px; border-radius: 5px; }
-        .menu.show { display: block; }
-        .menu button { display: block; width: 100%; padding: 5px; text-align: left; }
-    </style>
+    <link rel="stylesheet" href="editor.css" />
 </head>
 <body>
     <div class="sidebar">
@@ -55,69 +34,6 @@
         <textarea id="editor" oninput="handleChange()"></textarea>
         <div id="preview"></div>
     </div>
-    <script>
-        let files = JSON.parse(localStorage.getItem("files")) || {};
-        let currentFile = null, autosave = true;
-
-        function toggleSidebar() { document.querySelector(".sidebar").classList.toggle("hidden"); }
-        function toggleMenu() { document.getElementById("menu").classList.toggle("show"); }
-        function updateFileList() {
-            let list = document.getElementById("file-list"); list.innerHTML = "";
-            Object.keys(files).forEach(file => {
-                let li = document.createElement("li");
-                li.innerHTML = `<span onclick="loadFile('${file}')">${file}</span>`;
-                list.appendChild(li);
-            });
-        }
-        function searchFiles() {
-            let query = document.getElementById("search-bar").value.toLowerCase();
-            document.querySelectorAll("#file-list li").forEach(item => {
-                item.style.display = item.textContent.toLowerCase().includes(query) ? "flex" : "none";
-            });
-        }
-        function newFile() {
-            let name = prompt("Enter file name:", "Untitled.md");
-            if (!name || files[name]) return;
-            files[name] = ""; saveToLocalStorage(); updateFileList(); loadFile(name);
-        }
-        function renameFile() {
-            if (!currentFile) return alert("No file selected!");
-            let newName = prompt("Rename file:", currentFile);
-            if (!newName || files[newName]) return;
-            files[newName] = files[currentFile]; delete files[currentFile];
-            currentFile = newName; saveToLocalStorage(); updateFileList();
-        }
-        function deleteFile() {
-            if (!currentFile) return alert("No file selected!");
-            if (!confirm(`Delete "${currentFile}"?`)) return;
-            delete files[currentFile]; currentFile = null;
-            saveToLocalStorage(); updateFileList();
-        }
-        function toggleAutosave() { autosave = document.getElementById("autosave-toggle").checked; }
-        function handleChange() {
-            if (autosave) saveFile();
-            document.getElementById("preview").innerHTML = marked.parse(document.getElementById("editor").value);
-        }
-        function saveFile() {
-            if (!currentFile) return;
-            files[currentFile] = document.getElementById("editor").value;
-            saveToLocalStorage();
-        }
-        function loadFile(file) {
-            currentFile = file;
-            document.getElementById("editor").value = files[file];
-            document.getElementById("preview").innerHTML = marked.parse(files[file]);
-        }
-        function changeViewMode() {
-            let mode = document.getElementById("view-mode").value;
-            let editor = document.getElementById("editor"), preview = document.getElementById("preview");
-            document.body.classList.remove("both-mode");
-            if (mode === "editor") { editor.style.display = "block"; preview.style.display = "none"; }
-            else if (mode === "markdown") { editor.style.display = "none"; preview.style.display = "block"; }
-            else { editor.style.display = "block"; preview.style.display = "block"; document.body.classList.add("both-mode"); }
-        }
-        function saveToLocalStorage() { localStorage.setItem("files", JSON.stringify(files)); }
-        updateFileList();
-    </script>
+    <script src="editor.js" />
 </body>
 </html>
