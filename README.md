@@ -10,7 +10,7 @@ With over 1000+ people
 ## More...
 Lisense and ©️ - MIT
 
-Can use content with [credits](credits.md)
+Can use content with [credits](credit.md)
 
 With 3 years of trust... Leaper is here
 
