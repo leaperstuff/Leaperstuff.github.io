@@ -7,10 +7,23 @@ With over 1000+ people
 
 [Go to site](https://leaperstuff.github.io)
 
+##More...
+Lisense and ©️ - MIT
+
+Can use content with clear [credits](credits.md)
+
+With 3 years of trust... Leaper is here
+
+Formely ALPHA INC.
+
+For navigation: [Navigation File](!howto.md)
+
+#Versions:
+
 ## Whats in Leaper 2.0 (latest)
 - Editor working
 - Calender
-- All files orgnised
+- All files orgnised in seprate files and folders
 - Tasks
 
 ### 1.2.1
