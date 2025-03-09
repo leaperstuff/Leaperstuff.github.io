@@ -1,47 +1,56 @@
-# Leaper
-Leaper: The ultimate prodictivity god for students, professionals etc... .
+<h1>Leaper</h1>
+<p><strong>Leaper:</strong> The ultimate productivity god for students, professionals, etc...</p>
 
-Tested on over 50+ Orgnisasions
+<p>Tested on over 50+ organizations</p>
+<p>With over 1000+ people</p>
 
-With over 1000+ people
+<p><a href="https://leaperstuff.github.io">Go to site</a></p>
 
-[Go to site](https://leaperstuff.github.io)
+<h2>More...</h2>
+<p>License and &copy; - MIT</p>
+<p>Can use content with <a href="credit.md">credits</a></p>
 
-## More...
-Lisense and ©️ - MIT
+<p>With 3 years of trust... Leaper is here</p>
+<p>Formerly ALPHA INC.</p>
 
-Can use content with [credits](credit.md)
+<p>For navigation: <a href="howto.md">Navigation File</a></p>
 
-With 3 years of trust... Leaper is here
+<h1>Versions:</h1>
 
-Formely ALPHA INC.
+<h2>What's in Leaper 2.0 (latest)</h2>
+<ul>
+    <li>Editor working</li>
+    <li>Calendar</li>
+    <li>All files organized in separate files and folders</li>
+    <li>Tasks</li>
+</ul>
 
-For navigation: [Navigation File](!howto.md)
+<h3>1.2.1</h3>
+<ul>
+    <li>Editor</li>
+    <li>Calendar</li>
+    <li>Tasks - with <code>localStorage</code> and much more</li>
+</ul>
 
-# Versions:
+<h3>1.2</h3>
+<ul>
+    <li>Editor</li>
+    <li>Calendar</li>
+    <li>'New' Tasks</li>
+</ul>
 
-## Whats in Leaper 2.0 (latest)
-- Editor working
-- Calender
-- All files orgnised in seprate files and folders
-- Tasks
+<h3>1.1</h3>
+<ul>
+    <li>Editor</li>
+    <li>'New' Calendar</li>
+</ul>
 
-### 1.2.1
-- Editor
-- Calender
-- Tasks - with `localstorage` and much more
+<h3>1.0.1</h3>
+<ul>
+    <li>Editor - with <code>localStorage</code> and <code>markdown</code></li>
+</ul>
 
-### 1.2
-- Editor
-- Calender
-- 'New' Tasks
-
-### 1.1
-- Editor 
-- 'New' Calender
-
-### 1.0.1
-- Editor - with `localstorage` and `markdown`
-
-### 1.0
-- Editor
+<h3>1.0</h3>
+<ul>
+    <li>Editor</li>
+</ul>
