@@ -1,0 +1,116 @@
+   * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: #121212;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(30, 30, 30, 0.9);
+            box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+        }
+        .navbar h1 {
+            color: #ffcc00;
+            font-size: 1.8rem;
+        }
+        .menu a {
+            color: #ffcc00;
+            text-decoration: none;
+            font-size: 1.2rem;
+        }
+        /* Search Bar */
+        .search-container {
+            margin-top: 80px;
+            padding: 10px;
+        }
+        #search {
+            width: 80%;
+            max-width: 400px;
+            padding: 10px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+        }
+        /* Services Section */
+        .section-title {
+            font-size: 1.5rem;
+            margin: 20px 0 10px;
+            color: #ffcc00;
+        }
+        .services-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 10px;
+        }
+        .card {
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        .card h2 {
+            color: #ffcc00;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        .card p {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        .btn {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            color: #121212;
+            background: #ffcc00;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background: #e6b800;
+        }
+        /* Heart (Pin) Icon */
+        .heart {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .heart.pinned {
+            color: #888; /* Grey heart for pinned */
+        }
+        .heart.unpinned {
+            color: #ff3333; /* Red heart for unpinned */
+        }
+        /* Footer */
+        .footer {
+            padding: 20px;
+            font-size: 1rem;
+            opacity: 0.6;
+        }
