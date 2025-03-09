@@ -10,13 +10,13 @@ With over 1000+ people
 ## More...
 Lisense and ©️ - MIT
 
-Can use content with clear [credits](github.com/leaperstuff/leaperstuff.github.io/credits.md)
+Can use content with clear [credits](https://github.com/leaperstuff/leaperstuff.github.io/credits.md)
 
 With 3 years of trust... Leaper is here
 
 Formely ALPHA INC.
 
-For navigation: [Navigation File](github.com/leaperstuff/leaperstuff.github.io/!howto.md)
+For navigation: [Navigation File](https://github.com/leaperstuff/leaperstuff.github.io/!howto.md)
 
 # Versions:
 
