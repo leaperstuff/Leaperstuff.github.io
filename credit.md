@@ -1,30 +1,30 @@
-# Using our content on your content
+# Use content on your content
 
-## Video/Audio
+For Video/Audio:
 
-With clear credit on any of
-- Top right 
-- Top left
-- Bottom right
-- Bottom left
-- Center
+Clear credit placement in one of these locations:
 
-## File
+Top right
 
-if readme use with:
+Top left
 
-'''
+Bottom right
 
-Impoted from [leaperstuff.github.io](leaperstuff.github.io)
+Bottom left
 
-'''
+Center
 
-On file Then use comment of:
 
-'''
+
+For Files:
+
+If it’s a README file, include:
+
+Imported from [leaperstuff.github.io](leaperstuff.github.io)
+
+Inside the file, use a comment:
 
 from leaperstuff.github.io
 
-'''
+Alternatively, link to the site using the text "!CREDIT!"
 
-Or a link to site with name '!CREDIT!'
