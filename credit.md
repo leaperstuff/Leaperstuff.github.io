@@ -14,6 +14,7 @@ With clear credit on any of
 if readme use with:
 
 '''
+
 Impoted from [leaperstuff.github.io](leaperstuff.github.io)
 
 '''
@@ -21,7 +22,9 @@ Impoted from [leaperstuff.github.io](leaperstuff.github.io)
 On file Then use comment of:
 
 '''
+
 from leaperstuff.github.io
+
 '''
 
 Or a link to site with name '!CREDIT!'
