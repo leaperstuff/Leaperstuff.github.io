@@ -5,7 +5,7 @@ Tested on over 50+ Orgnisasions
 
 With over 1000+ people
 
-(Go to site)[leaperstuff.github.io]
+[Go to site](leaperstuff.github.io)
 
 ## Whats in Leaper 2.0 (latest)
 - Editor working
