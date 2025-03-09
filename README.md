@@ -10,13 +10,13 @@ With over 1000+ people
 ## More...
 Lisense and ©️ - MIT
 
-Can use content with clear [credits](credits.md)
+Can use content with clear [credits](github.com/leaperstuff/leaperstuff.github.io/credits.md)
 
 With 3 years of trust... Leaper is here
 
 Formely ALPHA INC.
 
-For navigation: [Navigation File](!howto.md)
+For navigation: [Navigation File](github.com/leaperstuff/leaperstuff.github.io/!howto.md)
 
 # Versions:
 
@@ -29,7 +29,7 @@ For navigation: [Navigation File](!howto.md)
 ### 1.2.1
 - Editor
 - Calender
-- Tasks - with 'localstorage' and much more
+- Tasks - with `localstorage` and much more
 
 ### 1.2
 - Editor
@@ -41,7 +41,7 @@ For navigation: [Navigation File](!howto.md)
 - 'New' Calender
 
 ### 1.0.1
-- Editor - with 'localstorage' and 'markdown'
+- Editor - with `localstorage` and `markdown`
 
 ### 1.0
 - Editor
