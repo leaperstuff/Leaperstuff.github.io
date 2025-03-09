@@ -1,84 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" type="image/png" href="images/main.webp">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leaper</title>
-    <link rel="stylesheet" href="styles.css" />
+    <title>LeaperNotes</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.3.0/marked.min.js"></script>
+    <link rel="icon" href="images/notepad.webp" />
+    <link rel="stylesheet" href="editor.css" />
 </head>
 <body>
-
-    <!-- Navbar -->
-    <div class="navbar">
-        <h1>Leaper</h1>
-        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-        <div class="menu">
-            <a href="#what">What is Leaper?</a>
-            <a href="services/services.html">Services</a>
-            <a href="#cofe">About me (ivaan)</a>
-            <a href="#video">Leaper Video</a>
-           
+    <div class="sidebar" role="navigation">
+        <div class="sidebar-header">
+            LeaperNotes <button class="nav-btn" onclick="newFile()">+</button>
         </div>
+        <input type="text" id="search-bar" class="search-bar" placeholder="Search notes..." oninput="searchFiles()" aria-label="Search notes">
+        <ul id="file-list"></ul>
     </div>
-
-    <!-- Section: What is Leaper? -->
-    <section id="what">
-        <h1>What is Leaper?</h1>
-        <p>
-            Leaper is a suite of productivity tools designed for students, professionals, and creatives.  
-            With an intuitive markdown editor, note-taking app, and upcoming planner, Leaper simplifies  
-            your workflow without distractions.
-        </p>
-        <button class="btn" onclick="location.href='posts.html'">View Posts</button>
-    </section>
-
-   <!-- Section: Certificates -->
-    <section id="cofe">
-        <h1>Certifgicates</h1>
-        <img src="certificates/htmlc.jpg" alt="HTML Certificate" />
-        <p>HTML Certificate</p>
-
-        <div style="display: flex; justify-content: center; gap: 10px; margin-top: 10px;">
-            <div style="text-align: center;">
-                <img src="certificates/cssc.jpg" alt="CSS Certificate" style="width: 45%;">
-                <p>CSS Certificate</p>
-            </div>
-            <div style="text-align: center;">
-                <img src="jsc.jpg" alt="JavaScript Certificate" style="width: 45%;">
-                <p>JavaScript Certificate</p>
-            </div>
+    <div class="main-content">
+        <div class="navbar">
+            <button class="nav-btn" onclick="toggleSidebar()" aria-label="Toggle sidebar">☰</button>
+            <select id="view-mode" onchange="changeViewMode()" aria-label="Change view mode">
+                <option value="editor">Editor</option>
+                <option value="markdown">Markdown</option>
+                <option value="both">Both</option>
+            </select>
+            <button class="nav-btn" onclick="toggleMenu()" aria-label="Toggle menu">⋮</button>
         </div>
-    </section>
-
-    <!-- Section: Services -->
-    <section id="services">
-        <h1>What We Made for You</h1>
-        <p>
-            Explore the tools we’ve built to enhance your workflow.  
-            From **note-taking** to **task management**, Leaper provides a seamless experience  
-            designed to boost your productivity.
-        </p>
-        <button class="btn" onclick="location.href='services/services.html'">View Services</button>
-    </section>
-
-    <!-- Section: Leaper Video -->
-    <section id="video">
-        <h1>Leaper in Action</h1>
-        <p>Watch this video to learn more about Leaper.</p>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/T0A7dkOJDE8?si=OuqpO35jb2nAFzon" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    </section>
-
-    <!-- Footer -->
-    <div class="footer">
-        <p>Copyright © 2025</p>
-        <p>Made in India</p>
-        <p>📧 <a href="mailto:ivaansri.contact@gmail.com" style="color: #ffcc00;">ivaansri.contact@gmail.com</a></p>
-        <p>▶️ <a href="https://youtube.com/@leaperstuff" target="_blank" style="color: #ffcc00;">@leaperstuff</a></p>
-        
+        <div class="menu" id="menu">
+            <button onclick="renameFile()">Rename</button>
+            <button onclick="deleteFile()">Delete</button>
+            <label><input type="checkbox" id="autosave-toggle" checked onclick="toggleAutosave()"> Autosave</label>
+        </div>
+        <textarea id="editor" oninput="handleChange()" aria-label="Editor"></textarea>
+        <div id="preview"></div>
     </div>
-
-    <script src="script.js" />
-
+    <script src="editor.js"></script>
 </body>
 </html>
