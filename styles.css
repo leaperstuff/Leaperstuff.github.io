@@ -1,0 +1,119 @@
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: #121212;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        /* Navbar */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: rgba(30, 30, 30, 0.9);
+            box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+        }
+        .navbar h1 {
+            color: #ffcc00;
+            font-size: 1.8rem;
+        }
+        .menu-toggle {
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: #ffcc00;
+            display: none;
+        }
+        .menu {
+            display: flex;
+        }
+        .menu a {
+            color: #ffcc00;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 1.2rem;
+        }
+        .menu a:hover {
+            text-decoration: underline;
+        }
+        @media (max-width: 768px) {
+            .menu {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                background: rgba(30, 30, 30, 0.95);
+                top: 60px;
+                left: 0;
+                width: 100%;
+                padding: 10px 0;
+            }
+            .menu a {
+                margin: 10px 0;
+                display: block;
+            }
+            .menu-toggle {
+                display: block;
+            }
+        }
+        section {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 100px 20px 20px;
+            scroll-margin-top: 80px;
+        }
+        h1 {
+            font-size: 3rem;
+            color: #ffcc00;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 1.5rem;
+            max-width: 800px;
+            line-height: 1.6;
+            opacity: 0.8;
+            word-wrap: break-word;
+        }
+        .btn {
+            margin-top: 20px;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #121212;
+            background: #ffcc00;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background: #e6b800;
+        }
+        .footer {
+            padding: 20px;
+            font-size: 1rem;
+            opacity: 0.6;
+        }
+        iframe {
+            width: 80%;
+            height: 400px;
+            border: none;
+            margin-top: 20px;
+            border-radius: 10px;
+        }
+        img {
+            width: 90%
+        }
