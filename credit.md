@@ -13,12 +13,13 @@ With clear credit on any of
 
 if readme use with:
 
-'''md
+'''
 Impoted from [leaperstuff.github.io](leaperstuff.github.io)
 
 '''
 
 On file Then use comment of:
+
 '''
 from leaperstuff.github.io
 '''
