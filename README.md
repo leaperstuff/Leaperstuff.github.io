@@ -7,7 +7,7 @@ With over 1000+ people
 
 [Go to site](https://leaperstuff.github.io)
 
-##More...
+## More...
 Lisense and ©️ - MIT
 
 Can use content with clear [credits](credits.md)
@@ -18,7 +18,7 @@ Formely ALPHA INC.
 
 For navigation: [Navigation File](!howto.md)
 
-#Versions:
+# Versions:
 
 ## Whats in Leaper 2.0 (latest)
 - Editor working
