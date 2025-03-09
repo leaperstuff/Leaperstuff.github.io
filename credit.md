@@ -22,7 +22,12 @@ Imported from [leaperstuff.github.io](leaperstuff.github.io)
 
 Inside the file, use a comment:
 
-```from leaperstuff.github.io```
+```
+from leaperstuff.github.io
+```
 
-Alternatively, link to the site using the text ```!CREDIT!```
+Alternatively, link to the site using the text woth any bold formatting (if any)
+```
+!CREDIT!
+```
 
