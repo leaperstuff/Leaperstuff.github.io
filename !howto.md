@@ -12,9 +12,7 @@
     <li><strong>Root Directory:</strong> Contains the main <code>index.html</code> file and essential metadata.</li>
     <li><strong>Docs/:</strong> Documentation files and guides.</li>
     <li><strong>Assets/:</strong> Includes images, stylesheets, and other static resources.</li>
-    <li><strong>Scripts/:</strong> Contains JavaScript files for various functionalities.</li>
     <li><strong>Templates/:</strong> Pre-made templates and reusable components.</li>
-    <li><strong>Versions/:</strong> Archived versions of Leaper, categorized by release.</li>
     <li><strong>README.md:</strong> Overview of the repository, including usage and contribution guidelines.</li>
     <li><strong>CREDITS.md:</strong> Information on attributions and licensing.</li>
 </ul>
