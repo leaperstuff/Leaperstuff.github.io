@@ -17,7 +17,12 @@
 
 <h1>Versions:</h1>
 
-<h2>What's in Leaper 2.0 (latest)</h2>
+<h2>What's in Leaper 2.1 (latest)</h2>
+<ul>
+<li>Codinghole</li>
+</ul>
+
+<h2>2.0</h2>
 <ul>
     <li>Editor working</li>
     <li>Calendar</li>
