@@ -1,11 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" type="image/png" href="images/main.webp">
+    <link rel="icon" type="image/webp" href="images/main.webp">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaper</title>
     <link rel="stylesheet" href="styles.css" />
+    <script>
+        function toggleMenu() {
+            document.querySelector(".menu").classList.toggle("active");
+        }
+    </script>
+    <style>
+        /* Basic Styling */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            text-align: center;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #222;
+            color: white;
+            padding: 15px 20px;
+        }
+
+        .menu {
+            display: flex;
+            gap: 15px;
+        }
+
+        .menu a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .menu-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Mobile Menu */
+        @media (max-width: 768px) {
+            .menu {
+                display: none;
+                flex-direction: column;
+                background: #333;
+                position: absolute;
+                top: 60px;
+                right: 0;
+                width: 200px;
+                padding: 10px;
+            }
+
+            .menu.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+        }
+
+        /* Sections */
+        section {
+            padding: 40px;
+        }
+
+        .btn {
+            background: #ffcc00;
+            border: none;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
+
+        /* Footer */
+        .footer {
+            background: #222;
+            color: white;
+            padding: 20px;
+        }
+
+        .footer a {
+            color: #ffcc00;
+        }
+    </style>
 </head>
 <body>
 
@@ -20,8 +114,6 @@
         </div>
     </div>
 
-
-
     <!-- Section: What is Leaper? -->
     <section id="what">
         <h1>What is Leaper?</h1>
@@ -31,18 +123,16 @@
             your workflow without distractions.
         </p>
         <button class="btn" onclick="location.href='posts.html'">View Posts</button> 
-        <button class="btn" onclick="location.href='https://github.com/leaperstuff'">About me</button>
-    
-
-<button class="btn" onclick="location.href='chat.html'">💬 Chat with Us</button>
-</section>
+        <button class="btn" onclick="location.href='https://github.com/leaperstuff'">Visit GitHub</button>
+        <button class="btn" onclick="location.href='chat.html'">💬 Chat with Us</button>
+    </section>
 
     <!-- Section: Services -->
     <section id="services">
         <h1>What We Made for You</h1>
         <p>
             Explore the tools we’ve built to enhance your workflow.  
-            From **note-taking** to **task management**, Leaper provides a seamless experience  
+            From <strong>note-taking</strong> to <strong>task management</strong>, Leaper provides a seamless experience  
             designed to boost your productivity.
         </p>
         <button class="btn" onclick="location.href='services/services.html'">View Services</button>
@@ -62,13 +152,9 @@
     <div class="footer">
         <p>Copyright © 2025</p>
         <p>Made in India</p>
-        <p>📧 <a href="mailto:ivaansri.contact@gmail.com" style="color: #ffcc00;">ivaansri.contact@gmail.com</a></p>
-        <p>▶️ <a href="https://github.com/leaperstuff" target="_blank" style="color: #ffcc00;">@leaperstuff</a></p>
+        <p>📧 <a href="mailto:ivaansri.contact@gmail.com">ivaansri.contact@gmail.com</a></p>
+        <p>▶️ <a href="https://github.com/leaperstuff" target="_blank">@leaperstuff</a></p>
     </div>
-
-    <!-- Tawk.to Chat Script (Floating Chat Icon) --
-    
-    <script src="script.js"></script>
 
 </body>
 </html>
