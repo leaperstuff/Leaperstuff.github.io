@@ -19,11 +19,11 @@
             <div class="scrolling-text">
                 Notes Calendar Tasks CodingHole Notes Calendar Tasks CodingHole Notes Calendar Tasks CodingHole
             </div>
-<div class="scrolling-text">
-                Calender Tasks CodingHole Notes Calendar Tasks CodingHole Notes Calendar Tasks CodingHole
+            <div class="scrolling-text">
+                Calendar Tasks CodingHole Notes Calendar Tasks CodingHole Notes Calendar Tasks CodingHole
             </div>
-<div class="scrolling-text">
-                 Tasks CodingHole Notes Calendar Tasks CodingHole Notes Calendar Tasks CodingHole
+            <div class="scrolling-text">
+                Tasks CodingHole Notes Calendar Tasks CodingHole Notes Calendar Tasks CodingHole
             </div>
         </div>
         <button class="btn" onclick="location.href='services/services.html'">View Services</button>
@@ -36,10 +36,10 @@
         With an intuitive markdown editor, note-taking app, and upcoming planner, Leaper simplifies your workflow.</p>
     </section>
 
-    <!-- story -->
+    <!-- Story -->
     <section>
         <h1>Some details</h1>
-     <p>Leaper was found in 2023 made with love by Ivaan srivastava in india 🇮🇳</p>
+        <p>Leaper was founded in 2023, made with love by Ivaan Srivastava in India 🇮🇳</p>
     </section>
 
     <!-- Leaper in Action (Video) -->
@@ -48,7 +48,6 @@
         <p>Watch this video to learn more about Leaper.</p>
         <iframe src="https://www.youtube.com/embed/T0A7dkOJDE8?si=OuqpO35jb2nAFzon" allowfullscreen></iframe>
     </section>
-
 
     <!-- FAQ -->
     <section>
@@ -67,7 +66,6 @@
         </details>
     </section>
 
-   
     <!-- Footer -->
     <div class="footer">
         <p>Copyright © 2025 Leaper. All Rights Reserved.</p>
@@ -75,22 +73,31 @@
         <p>📧 <a href="mailto:ivaansri.contact@gmail.com">ivaansri.contact@gmail.com</a></p>
         <p>▶️ <a href="https://github.com/leaperstuff" target="_blank">@leaperstuff</a></p>
     </div>
- <!-- Floating Support Button -->
-    <div id="startChat">💬</div>
 
+    <!-- Floating Support Button -->
+    <div id="startChat" class="support-btn">💬</div>
 
-<script>
-document.getElementById("startChat").addEventListener("click", function () {
-    if (!window.Tawk_API) {
-        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-        s1.async = true;
-        s1.src = 'https://embed.tawk.to/67cef0441516c119182fb70a/1im05l3j3';
-        s1.charset = 'UTF-8';
-        s1.setAttribute('crossorigin', '*');
-        s0.parentNode.insertBefore(s1, s0);
-    }
-});
-</script>
+    <script>
+        document.getElementById("startChat").addEventListener("click", function () {
+            if (!window.Tawk_API) {
+                var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+                var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+                s1.async = true;
+                s1.src = 'https://embed.tawk.to/67cef0441516c119182fb70a/1im05l3j3';
+                s1.charset = 'UTF-8';
+                s1.setAttribute('crossorigin', '*');
+                s0.parentNode.insertBefore(s1, s0);
+
+                // Wait for the script to load and then open chat
+                s1.onload = function () {
+                    Tawk_API.toggle();
+                };
+            } else {
+                // If already loaded, just open the chat
+                Tawk_API.toggle();
+            }
+        });
+    </script>
+
 </body>
 </html>
