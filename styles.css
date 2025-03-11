@@ -1,85 +1,41 @@
- /* General Styles */
-        body {
-            background-color: #121212;
-            color: white;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 0;
-            padding: 0;
-        }
-        nav {
-            background: #FFD700;
-            padding: 15px;
-            font-size: 24px;
-            font-weight: bold;
-            color: black;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            left: 0;
-        }
-        section {
-            padding: 100px 20px;
-        }
-        button, a {
-            background: #FFD700;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            margin: 10px;
-            display: inline-block;
-            text-decoration: none;
-            color: black;
-        }
-        footer {
-            background: #1a1a1a;
-            padding: 20px;
-            font-size: 14px;
-        }
-        iframe {
-            width: 80%;
-            height: 315px;
-            border-radius: 8px;
-        }
-        /* Floating Mute Button */
-        #mute-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: red;
-            color: white;
-            padding: 10px;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .fade-in {
-            animation: fadeIn 2s ease-in-out;
-        }
-        /* Typewriter Effect */
-        .typewriter {
-            display: inline-block;
-            border-right: 2px solid white;
-            padding-right: 5px;
-            white-space: nowrap;
-            overflow: hidden;
-        }
-        /* FAQ Styles */
-        .faq-item {
-            background: #1e1e1e;
-            padding: 15px;
-            margin: 10px auto;
-            border-radius: 8px;
-            width: 80%;
-            cursor: pointer;
-        }
-        .faq-answer {
-            display: none;
-            padding-top: 10px;
+/* General Styling */
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        body { background-color: #121212; color: #fff; font-family: Arial, sans-serif; text-align: center; }
+
+        /* Navbar */
+        .navbar { position: fixed; top: 0; left: 0; width: 100%; height: 60px; display: flex; align-items: center; justify-content: center; background: rgba(30, 30, 30, 0.95); box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1); z-index: 1000; }
+        .navbar h1 { color: #ffcc00; font-size: 1.8rem; padding: 3px; }
+
+        /* Sections */
+        section { padding: 100px 20px 60px; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        h1 { font-size: 2.5rem; color: #ffcc00; margin-bottom: 20px; }
+        p { font-size: 1.2rem; max-width: 800px; margin: 0 auto 20px; opacity: 0.8; }
+
+        /* Scrolling Text */
+        .scrolling-text-container { overflow: hidden; white-space: nowrap; width: 100%; position: relative; margin-top: 15px; }
+        .scrolling-text { display: inline-block; font-size: 1.5rem; color: #e6e6e6; animation: scrollText 8s linear infinite; }
+        @keyframes scrollText { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+        /* Buttons */
+        .btn { margin-top: 20px; padding: 12px 24px; font-size: 1.1rem; font-weight: bold; color: #121212; background: #ffcc00; border: none; border-radius: 5px; cursor: pointer; transition: 0.3s; }
+        .btn:hover { background: #e6b800; }
+
+        /* Video */
+        iframe { width: 80%; max-width: 600px; height: 315px; border-radius: 10px; border: none; margin-top: 20px; }
+
+        /* Floating Support Button */
+        .support-btn { position: fixed; bottom: 20px; right: 20px; background: #ffcc00; color: #121212; font-size: 1.5rem; width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); cursor: pointer; transition: 0.3s; }
+        .support-btn:hover { background: #e6b800; }
+
+        /* Footer */
+        .footer { padding: 20px; font-size: 1rem; opacity: 0.6; background: #1a1a1a; margin-top: 40px; }
+        .footer a { color: #ffcc00; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .scrolling-text { font-size: 1.2rem; }
+            .btn { font-size: 1rem; padding: 10px 18px; }
+            .support-btn { width: 45px; height: 45px; font-size: 1.3rem; }
         }
