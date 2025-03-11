@@ -1,66 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" type="image/webp" href="images/main.webp">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaper</title>
     <link rel="stylesheet" href="styles.css" />
-    <script src="script.js">
-     
-        
-    </script>
-    
 </head>
 <body>
 
-    <!-- Navbar -->
-    <div class="navbar">
-        <h1>Leaper</h1>
+    <nav>Leaper</nav>
+
+    <section class="fade-in">
+        <h1>Leaperstuff, just working for you</h1>
+        <button id="services-btn">Our services</button>
+    </section>
+
+    <section class="fade-in">
+        <h2 id="word-idk" class="typewriter"></h2><br>
+        <a href="chat.html">AI Support</a>
+        <button onclick="location.href='mailto:ivaansri.contact@gmail.com?subject=website/'">Email</button>
+        <a href="https://github.com/leaperstuff">GitHub</a>
+        <button onclick="document.getElementById('faq').scrollIntoView({ behavior: 'smooth' });">FAQ</button>
+    </section>
+
+    <section class="fade-in">
+        <h2>Leaper in Action</h2>
+        <iframe src="https://www.youtube.com/embed/T0A7dkOJDE8?si=OuqpO35jb2nAFzon" allowfullscreen></iframe>
+    </section>
+
+    <section id="faq" class="fade-in">
+        <h2>FAQs</h2>
+        <div class="faq-item" onclick="toggleFAQ(this)">
+            <strong>What is Leaper?</strong>
+            <div class="faq-answer">Leaper is a suite of productivity tools.</div>
         </div>
-    </div>
-
-    <!-- Section: What is Leaper? -->
-    <section id="what">
-        <h1>What is Leaper?</h1>
-        <p>
-            Leaper is a suite of productivity tools designed for students, professionals, and creatives.  
-            With an intuitive markdown editor, note-taking app, and upcoming planner, Leaper simplifies  
-            your workflow without distractions.
-        </p>
-        <button class="btn" onclick="location.href='posts.html'">View Posts</button> 
-        <button class="btn" onclick="location.href='https://github.com/leaperstuff'">Visit GitHub</button>
-        <button class="btn" onclick="location.href='chat.html'">💬 Chat with Us</button>
+        <div class="faq-item" onclick="toggleFAQ(this)">
+            <strong>How does AI support work?</strong>
+            <div class="faq-answer">AI support helps answer your queries in real-time.</div>
+        </div>
+<div class="faq-item" onclick="toggleFAQ(this)">
+            <strong>Pricing?</strong>
+            <div class="faq-answer">Leaper is free of cost.</div>
+        </div>
     </section>
 
-    <!-- Section: Services -->
-    <section id="services">
-        <h1>What We Made for You</h1>
-        <p>
-            Explore the tools we’ve built to enhance your workflow.  
-            From <strong>note-taking</strong> to <strong>task management</strong>, Leaper provides a seamless experience  
-            designed to boost your productivity.
-        </p>
-        <button class="btn" onclick="location.href='services/services.html'">View Services</button>
-    </section>
+    <footer class="fade-in">
+        &copy; 2025 Leaper | <a href="mailto:ivaansri.contact@gmail.com?subject=website/">Email</a> | 
+        <a href="https://github.com/leaperstuff">GitHub</a>
+    </footer>
 
-    <!-- Section: Leaper Video -->
-    <section id="video">
-        <h1>Leaper in Action</h1>
-        <p>Watch this video to learn more about Leaper.</p>
-        <iframe width="560" height="315" src="https://www.youtube.com/embed/T0A7dkOJDE8?si=OuqpO35jb2nAFzon" 
-            title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; 
-            encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
-        </iframe>
-    </section>
+    
 
-    <!-- Footer -->
-    <div class="footer">
-        <p>Copyright © 2025</p>
-        <p>Made in India</p>
-        <p>📧 <a href="mailto:ivaansri.contact@gmail.com">ivaansri.contact@gmail.com</a></p>
-        <p>▶️ <a href="https://github.com/leaperstuff" target="_blank">@leaperstuff</a></p>
-    </div>
+    <script src="script.js"></script>
 
 </body>
 </html>
