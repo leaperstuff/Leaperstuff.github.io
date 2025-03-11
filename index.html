@@ -78,26 +78,29 @@
     <div id="startChat" class="support-btn">💬</div>
 
     <script>
-        document.getElementById("startChat").addEventListener("click", function () {
-            if (!window.Tawk_API) {
-                var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-                var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
-                s1.async = true;
-                s1.src = 'https://embed.tawk.to/67cef0441516c119182fb70a/1im05l3j3';
-                s1.charset = 'UTF-8';
-                s1.setAttribute('crossorigin', '*');
-                s0.parentNode.insertBefore(s1, s0);
+    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    (function() {
+        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = 'https://embed.tawk.to/67cef0441516c119182fb70a/1im05l3j3';
+        s1.charset = 'UTF-8';
+        s1.setAttribute('crossorigin', '*');
+        s0.parentNode.insertBefore(s1, s0);
+    })();
 
-                // Wait for the script to load and then open chat
-                s1.onload = function () {
-                    Tawk_API.toggle();
-                };
-            } else {
-                // If already loaded, just open the chat
-                Tawk_API.toggle();
-            }
-        });
-    </script>
+    // Wait for Tawk.to to be ready
+    function openChat() {
+        if (typeof Tawk_API !== "undefined" && Tawk_API.toggle) {
+            Tawk_API.toggle();
+        } else {
+            console.warn("Tawk.to not ready yet, retrying...");
+            setTimeout(openChat, 500); // Retry after 500ms
+        }
+    }
+
+    // Attach event to button
+    document.getElementById("startChat").addEventListener("click", openChat);
+</script>
 
 </body>
 </html>
