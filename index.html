@@ -1,57 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="icon" type="image/webp" href="images/main.webp">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaper</title>
-    <link rel="stylesheet" href="styles.css" />
+    <style>
+        /* General Styling */
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        body { background-color: #121212; color: #fff; font-family: Arial, sans-serif; text-align: center; }
+
+        /* Navbar */
+        .navbar { position: fixed; top: 0; left: 0; width: 100%; height: 60px; display: flex; align-items: center; justify-content: center; background: rgba(30, 30, 30, 0.95); box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1); z-index: 1000; }
+        .navbar h1 { color: #ffcc00; font-size: 1.8rem; padding: 3px; }
+
+        /* Sections */
+        section { padding: 100px 20px 60px; min-height: 80vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+        h1 { font-size: 2.5rem; color: #ffcc00; margin-bottom: 20px; }
+        p { font-size: 1.2rem; max-width: 800px; margin: 0 auto 20px; opacity: 0.8; }
+
+        /* Scrolling Text */
+        .scrolling-text-container { overflow: hidden; white-space: nowrap; width: 100%; position: relative; margin-top: 15px; }
+        .scrolling-text { display: inline-block; font-size: 1.5rem; color: #e6e6e6; animation: scrollText 8s linear infinite; }
+        @keyframes scrollText { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+        /* Buttons */
+        .btn { margin-top: 20px; padding: 12px 24px; font-size: 1.1rem; font-weight: bold; color: #121212; background: #ffcc00; border: none; border-radius: 5px; cursor: pointer; transition: 0.3s; }
+        .btn:hover { background: #e6b800; }
+
+        /* Video */
+        iframe { width: 80%; max-width: 600px; height: 315px; border-radius: 10px; border: none; margin-top: 20px; }
+
+        /* Floating Support Button */
+        .support-btn { position: fixed; bottom: 20px; right: 20px; background: #ffcc00; color: #121212; font-size: 1.5rem; width: 50px; height: 50px; border-radius: 50%; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); cursor: pointer; transition: 0.3s; }
+        .support-btn:hover { background: #e6b800; }
+
+        /* Footer */
+        .footer { padding: 20px; font-size: 1rem; opacity: 0.6; background: #1a1a1a; margin-top: 40px; }
+        .footer a { color: #ffcc00; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            .scrolling-text { font-size: 1.2rem; }
+            .btn { font-size: 1rem; padding: 10px 18px; }
+            .support-btn { width: 45px; height: 45px; font-size: 1.3rem; }
+        }
+    </style>
 </head>
 <body>
 
-    <nav>Leaper</nav>
+    <!-- Navbar -->
+    <div class="navbar"><h1>Leaper</h1></div>
 
-    <section class="fade-in">
-        <h1>Leaperstuff, just working for you</h1>
-        <button onclick="services/services.html" id="services-btn">Our services</button>
+    <!-- Hero Section -->
+    <section>
+        <h1>Leaper, working for you</h1>
+        <div class="scrolling-text-container">
+            <div class="scrolling-text">
+                Notes Calendar Tasks CodingHole Notes Calendar Tasks CodingHole Notes Calendar Tasks CodingHole
+            </div>
+        </div>
+        <button class="btn" onclick="location.href='services/services.html'">View Services</button>
     </section>
 
-    <section class="fade-in">
-        <h2 id="word-idk" class="typewriter"></h2><br>
-        <a href="chat.html">AI Support</a>
-        <button onclick="location.href='mailto:ivaansri.contact@gmail.com?subject=website/'">Email</button>
-        <a href="https://github.com/leaperstuff">GitHub</a>
-        <button onclick="document.getElementById('faq').scrollIntoView({ behavior: 'smooth' });">FAQ</button>
+    <!-- What is Leaper? -->
+    <section>
+        <h1>What is Leaper?</h1>
+        <p>Leaper is a suite of productivity tools designed for students, professionals, and creatives.  
+        With an intuitive markdown editor, note-taking app, and upcoming planner, Leaper simplifies your workflow.</p>
     </section>
 
-    <section class="fade-in">
-        <h2>Leaper in Action</h2>
+    <!-- How It Works -->
+    <section>
+        <h1>How It Works</h1>
+        <p>Leaper is built to be simple and effective. Here’s how you can get started:</p>
+        <ol>
+            <li>Access Leaper’s tools from anywhere.</li>
+            <li>Use the markdown editor for distraction-free writing.</li>
+            <li>Manage tasks and notes with easy-to-use features.</li>
+        </ol>
+    </section>
+
+    <!-- Leaper in Action (Video) -->
+    <section>
+        <h1>Leaper in Action</h1>
+        <p>Watch this video to learn more about Leaper.</p>
         <iframe src="https://www.youtube.com/embed/T0A7dkOJDE8?si=OuqpO35jb2nAFzon" allowfullscreen></iframe>
     </section>
 
-    <section id="faq" class="fade-in">
-        <h2>FAQs</h2>
-        <div class="faq-item" onclick="toggleFAQ(this)">
-            <strong>What is Leaper?</strong>
-            <div class="faq-answer">Leaper is a suite of productivity tools.</div>
-        </div>
-        <div class="faq-item" onclick="toggleFAQ(this)">
-            <strong>How does AI support work?</strong>
-            <div class="faq-answer">AI support helps answer your queries in real-time.</div>
-        </div>
-<div class="faq-item" onclick="toggleFAQ(this)">
-            <strong>Pricing?</strong>
-            <div class="faq-answer">Leaper is free of cost.</div>
-        </div>
+    <!-- Random Cool Stuff -->
+    <section>
+        <h1>Random Cool Stuff</h1>
+        <p>Leaper is packed with hidden gems! Discover shortcuts, themes, and cool tricks to boost productivity.</p>
     </section>
 
-    <footer class="fade-in">
-        &copy; 2025 Leaper | <a href="mailto:ivaansri.contact@gmail.com?subject=website/">Email</a> | 
-        <a href="https://github.com/leaperstuff">GitHub</a>
-    </footer>
+    <!-- FAQ -->
+    <section>
+        <h1>FAQ</h1>
+        <details>
+            <summary>What is Leaper?</summary>
+            <p>Leaper is a productivity suite designed to help you manage tasks, notes, and projects.</p>
+        </details>
+        <details>
+            <summary>Is Leaper free?</summary>
+            <p>Yes! Leaper is open-source and free to use.</p>
+        </details>
+        <details>
+            <summary>Can I use Leaper on mobile?</summary>
+            <p>Yes! Leaper is fully responsive and works seamlessly on all devices.</p>
+        </details>
+    </section>
 
-    
+    <!-- Floating Support Button -->
+    <div class="support-btn" onclick="location.href='chat.html'">💬</div>
 
-    <script src="script.js"></script>
+    <!-- Footer -->
+    <div class="footer">
+        <p>Copyright © 2025 Leaper. All Rights Reserved.</p>
+        <p>Made in India</p>
+        <p>📧 <a href="mailto:ivaansri.contact@gmail.com">ivaansri.contact@gmail.com</a></p>
+        <p>▶️ <a href="https://github.com/leaperstuff" target="_blank">@leaperstuff</a></p>
+    </div>
 
 </body>
 </html>
