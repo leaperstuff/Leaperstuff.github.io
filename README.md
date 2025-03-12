@@ -1,5 +1,7 @@
 <h1>Leaper</h1>
+
 ![Holiimg](images/holi.webp)
+
 <p><strong>Leaper:</strong> The ultimate productivity god for students, professionals, etc...</p>
 
 <p>Tested on over 50+ organizations</p>
