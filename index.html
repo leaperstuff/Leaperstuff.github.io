@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="icon" type="image/webp" href="images/main.webp">
+    <link rel="icon" type="image/webp" href="images/holi.webp">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaper</title>
@@ -79,6 +79,28 @@
 
     <!-- Floating Support Button -->
     <div id="startChat" class="support-btn">💬</div>
+
+<!-- Holi Pop-up -->
+<div id="holiPopup" class="popup">
+    <div class="popup-content">
+        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <img src="images/holi.webp" alt="Happy Holi!" class="popup-image">
+        <h2>Happy Holi!</h2>
+        <p>Celebrate with colors and joy!</p>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        setTimeout(() => {
+            document.getElementById("holiPopup").classList.add("show-popup");
+        }, 500); // Show after 500ms
+    });
+
+    function closePopup() {
+        document.getElementById("holiPopup").classList.remove("show-popup");
+    }
+</script>
 
     <script>
     var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
