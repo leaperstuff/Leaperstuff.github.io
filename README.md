@@ -1,6 +1,6 @@
 <h1>Leaper</h1>
 
-![Holiimg](images/holi.webp)
+![img](images/main.gif)
 
 <p><strong>Leaper:</strong> The ultimate productivity god for students, professionals, etc...</p>
 
