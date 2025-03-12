@@ -80,73 +80,7 @@
     <!-- Floating Support Button -->
     <div id="startChat" class="support-btn">💬</div>
 
-<!-- Festival Pop-up -->
-<div id="festivalPopup" class="popup">
-    <div class="popup-content">
-        <span class="close-btn" onclick="closePopup()">×</span>
-        <img id="popupImage" src="images/main.webp" alt="Festival Image" class="popup-img">
-        <h2 id="popupTitle">Happy Festival!</h2>
-        <p id="popupMessage">Wishing you joy and happiness!</p>
-    </div>
-</div>
 
-<script>
-// Function to check the current date and show the correct festival popup
-function showFestivalPopup() {
-    let today = new Date();
-    let holiDate = new Date("2025-03-14"); // Change to actual Holi date
-    let diwaliDate = new Date("2025-10-29"); // Change to actual Diwali date
-
-    let startHoli = new Date(holiDate);
-    startHoli.setDate(startHoli.getDate() - 3); // 3 days before Holi
-
-    let endHoli = new Date(holiDate);
-    endHoli.setDate(endHoli.getDate() + 3); // 3 days after Holi
-
-    let startDiwali = new Date(diwaliDate);
-    startDiwali.setDate(startDiwali.getDate() - 3); // 3 days before Diwali
-
-    let endDiwali = new Date(diwaliDate);
-    endDiwali.setDate(endDiwali.getDate() + 3); // 3 days after Diwali
-
-    let popup = document.getElementById("festivalPopup");
-    let popupImage = document.getElementById("popupImage");
-    let popupTitle = document.getElementById("popupTitle");
-    let popupMessage = document.getElementById("popupMessage");
-
-    if (today >= startHoli && today <= endHoli) {
-        // Show Holi popup
-        popupImage.src = "images/holi.webp";
-        popupTitle.innerText = "Happy Holi!";
-        popupMessage.innerText = "Wishing you colors of joy and happiness!";
-        popup.style.opacity = "1";
-        popup.style.visibility = "visible";
-    } else if (today >= startDiwali && today <= endDiwali) {
-        // Show Diwali popup
-        popupImage.src = "images/diwali.webp";
-        popupTitle.innerText = "Happy Diwali!";
-        popupMessage.innerText = "May your life be filled with light and happiness!";
-        popup.style.opacity = "1";
-        popup.style.visibility = "visible";
-    } else {
-        // No popup (default behavior)
-        popup.style.display = "none";
-    }
-
-    // Auto-close after 10 seconds
-    setTimeout(closePopup, 10000);
-}
-
-// Function to close the pop-up
-function closePopup() {
-    let popup = document.getElementById("festivalPopup");
-    popup.style.opacity = "0";
-    popup.style.visibility = "hidden";
-}
-
-// Run the function on page load
-window.onload = showFestivalPopup;
-</script>
 
     <script>
     var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
