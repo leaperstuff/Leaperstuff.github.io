@@ -1,6 +1,6 @@
 <h1>Leaper</h1>
 
-![img](images/main.gif)
+![img](images/main.webp)
 
 <p><strong>Leaper:</strong> The ultimate productivity god for students, professionals, etc...</p>
 
