@@ -11,7 +11,7 @@
             background: #222;
             color: #FFD700;
             font-family: monospace;
-            touch-action: none; /* Prevent scrolling while drawing */
+            touch-action: none;
         }
         canvas {
             position: absolute;
@@ -42,12 +42,36 @@
         .toolbar input {
             width: 40px;
         }
+        .overflow-menu {
+            position: fixed;
+            top: 50px;
+            right: 10px;
+            background: black;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .menu-button {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            background: #FFD700;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
     <canvas id="board"></canvas>
+
+    <!-- Toolbar -->
     <div class="toolbar">
-<p>Leaperboard</p>
+        <p>Leaperboard</p>
         <button onclick="setMode('pen')">✏️</button>
         <button onclick="setMode('eraser')">🧽</button>
         <button onclick="window.location.href='services.html'">Return</button>
@@ -55,20 +79,34 @@
         <input type="range" id="thickness" min="1" max="10" value="2">
     </div>
 
+    <!-- Overflow Menu -->
+    <button class="menu-button" onclick="toggleMenu()">☰</button>
+    <div class="overflow-menu" id="overflowMenu">
+        <button onclick="undo()">↩️ Undo</button>
+        <button onclick="enableTextMode()">🔤 Add Text</button>
+        <button onclick="downloadCanvas()">📥 Download</button>
+        <button onclick="clearCanvas()">🗑️ Clear</button>
+        <input type="color" id="bgColor" value="#ffffff" onchange="changeBgColor()">
+    </div>
+
     <script>
         const canvas = document.getElementById("board");
         const ctx = canvas.getContext("2d");
         let isDrawing = false, mode = "pen";
+        let drawingHistory = [];
+        let textMode = false;
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+            saveState();
         }
         resizeCanvas();
         window.addEventListener("resize", resizeCanvas);
 
         function setMode(newMode) {
             mode = newMode;
+            textMode = false;
         }
 
         function getPos(e) {
@@ -76,37 +114,100 @@
         }
 
         function startDrawing(e) {
-            const { x, y } = getPos(e);
-            if (mode === "text") {
-                const text = prompt("Enter text:");
-                if (text) {
-                    ctx.fillStyle = document.getElementById("color").value;
-                    ctx.font = "20px monospace";
-                    ctx.fillText(text, x, y);
-                }
-            } else {
-                isDrawing = true;
-                ctx.beginPath();
-                ctx.moveTo(x, y);
+            if (textMode) {
+                addText(e);
+                return;
             }
+            isDrawing = true;
+            const { x, y } = getPos(e);
+            ctx.beginPath();
+            ctx.moveTo(x, y);
         }
 
         function draw(e) {
-            if (!isDrawing) return;
+            if (!isDrawing || textMode) return;
             const { x, y } = getPos(e);
             ctx.strokeStyle = document.getElementById("color").value;
             ctx.lineWidth = document.getElementById("thickness").value;
             ctx.lineCap = "round";
-            if (mode === "pen") {
-                ctx.lineTo(x, y);
-                ctx.stroke();
-            } else if (mode === "eraser") {
-                ctx.clearRect(x - 10, y - 10, 20, 20);
-            }
+            ctx.lineTo(x, y);
+            ctx.stroke();
         }
 
         function stopDrawing() {
+            if (!textMode) saveState();
             isDrawing = false;
+        }
+
+        function toggleMenu() {
+            const menu = document.getElementById("overflowMenu");
+            menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawingHistory = [];
+        }
+
+        function downloadCanvas() {
+            const link = document.createElement("a");
+            link.download = "leaperboard.png";
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+
+        function changeBgColor() {
+            canvas.style.background = document.getElementById("bgColor").value;
+        }
+
+        function saveState() {
+            drawingHistory.push(canvas.toDataURL());
+            if (drawingHistory.length > 10) drawingHistory.shift();
+        }
+
+        function undo() {
+            if (drawingHistory.length > 1) {
+                drawingHistory.pop();
+                let img = new Image();
+                img.src = drawingHistory[drawingHistory.length - 1];
+                img.onload = () => {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0);
+                };
+            }
+        }
+
+        function enableTextMode() {
+            textMode = true;
+        }
+
+        function addText(e) {
+            const { x, y } = getPos(e);
+            const input = document.createElement("input");
+            input.type = "text";
+            input.style.position = "absolute";
+            input.style.left = `${x}px`;
+            input.style.top = `${y}px`;
+            input.style.font = "20px monospace";
+            input.style.background = "transparent";
+            input.style.color = document.getElementById("color").value;
+            input.style.border = "none";
+            input.style.outline = "none";
+            input.style.width = "auto";
+
+            input.addEventListener("keydown", function(event) {
+                if (event.key === "Enter") {
+                    ctx.fillStyle = document.getElementById("color").value;
+                    ctx.font = "20px monospace";
+                    ctx.fillText(this.value, x, y);
+                    document.body.removeChild(this);
+                    saveState();
+                    textMode = false;
+                }
+            });
+
+            document.body.appendChild(input);
+            input.focus();
         }
 
         // Mouse events
