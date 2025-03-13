@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaper Whiteboard</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #222;
+            color: #FFD700;
+            font-family: monospace;
+            touch-action: none; /* Prevent scrolling while drawing */
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: white;
+        }
+        .toolbar {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            background: black;
+            padding: 8px;
+            border-radius: 10px;
+            gap: 6px;
+        }
+        .toolbar button, input {
+            background: #FFD700;
+            border: none;
+            padding: 8px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .toolbar input {
+            width: 40px;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="board"></canvas>
+    <div class="toolbar">
+<p>Leaperboard</p>
+        <button onclick="setMode('pen')">✏️</button>
+        <button onclick="setMode('eraser')">🧽</button>
+        <button onclick="window.location.href='services.html'">Return</button>
+        <input type="color" id="color" value="#000000">
+        <input type="range" id="thickness" min="1" max="10" value="2">
+    </div>
+
+    <script>
+        const canvas = document.getElementById("board");
+        const ctx = canvas.getContext("2d");
+        let isDrawing = false, mode = "pen";
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener("resize", resizeCanvas);
+
+        function setMode(newMode) {
+            mode = newMode;
+        }
+
+        function getPos(e) {
+            return e.touches ? { x: e.touches[0].clientX, y: e.touches[0].clientY } : { x: e.clientX, y: e.clientY };
+        }
+
+        function startDrawing(e) {
+            const { x, y } = getPos(e);
+            if (mode === "text") {
+                const text = prompt("Enter text:");
+                if (text) {
+                    ctx.fillStyle = document.getElementById("color").value;
+                    ctx.font = "20px monospace";
+                    ctx.fillText(text, x, y);
+                }
+            } else {
+                isDrawing = true;
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+            }
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const { x, y } = getPos(e);
+            ctx.strokeStyle = document.getElementById("color").value;
+            ctx.lineWidth = document.getElementById("thickness").value;
+            ctx.lineCap = "round";
+            if (mode === "pen") {
+                ctx.lineTo(x, y);
+                ctx.stroke();
+            } else if (mode === "eraser") {
+                ctx.clearRect(x - 10, y - 10, 20, 20);
+            }
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+        }
+
+        // Mouse events
+        canvas.addEventListener("mousedown", startDrawing);
+        canvas.addEventListener("mousemove", draw);
+        canvas.addEventListener("mouseup", stopDrawing);
+
+        // Touch events (for mobile)
+        canvas.addEventListener("touchstart", startDrawing);
+        canvas.addEventListener("touchmove", draw);
+        canvas.addEventListener("touchend", stopDrawing);
+    </script>
+</body>
+</html>
