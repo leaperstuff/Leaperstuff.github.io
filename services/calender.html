@@ -5,228 +5,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Leaper Calendar</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
-        body {
-            background: #121212;
-            color: #fff;
-            text-align: center;
-        }
-        .navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 15px;
-            background: rgba(30, 30, 30, 0.9);
-            z-index: 1000;
-        }
-        .container {
-            display: flex;
-            min-height: 100vh;
-            padding-top: 60px;
-        }
-        .sidebar {
-            width: 250px;
-            background: rgba(30, 30, 30, 0.9);
-            padding: 20px;
-            height: 100vh;
-            position: fixed;
-            left: 0;
-            top: 60px;
-        }
-        .sidebar select, .sidebar button {
-            width: 100%;
-            margin: 10px 0;
-            padding: 10px;
-            background: #1e1e1e;
-            color: #ffcc00;
-            border: 1px solid #ffcc00;
-            border-radius: 5px;
-        }
-        .content {
-            flex: 1;
-            margin-left: 250px;
-            padding: 20px;
-        }
-        .calendar {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
-        }
-        .day {
-            padding: 20px;
-            background: #1e1e1e;
-            border: 1px solid #ffcc00;
-            cursor: pointer;
-            position: relative;
-        }
-        .event-dot {
-            width: 10px;
-            height: 10px;
-            background: red;
-            border-radius: 50%;
-            position: absolute;
-            bottom: 5px;
-            right: 5px;
-        }
-        .plus-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #ffcc00;
-            color: #121212;
-            font-size: 24px;
-            border: none;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            cursor: pointer;
-        }
-        .event-popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #1e1e1e;
-            padding: 20px;
-            border-radius: 10px;
-            display: none;
-            flex-direction: column;
-            width: 300px;
-            z-index: 1000;
-        }
-        .event-popup input, .event-popup select, .event-popup button {
-            margin: 5px 0;
-            padding: 10px;
-            width: 100%;
-            background: #1e1e1e;
-            color: #ffcc00;
-            border: 1px solid #ffcc00;
-            border-radius: 5px;
-        }
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 999;
-        }
+        body { background: black; color: yellow; font-family: monospace; text-align: center; }
+        input, button { margin: 10px; }
     </style>
 </head>
 <body>
-
-    <div class="navbar">
-        <h1>Leaper Calendar</h1>
-    </div>
-
-    <div class="container">
-        <div class="sidebar">
-            <select id="monthDropdown" onchange="generateCalendar()"></select>
-            <select id="yearDropdown" onchange="generateCalendar()"></select>
-            <button onclick="openSettings()">⚙️ Settings</button>
-        </div>
-
-        <div class="content">
-            <h2 id="currentDate"></h2>
-            <div class="calendar" id="calendar"></div>
-        </div>
-    </div>
-
-    <button class="plus-btn" onclick="openEventPopup()">+</button>
-
-    <div class="overlay" id="overlay"></div>
-    <div class="event-popup" id="eventPopup">
-        <h3>Add Event</h3>
-        <input type="text" id="eventName" placeholder="Event Name">
-        <input type="text" id="eventDesc" placeholder="Description">
-        <select id="eventDay"></select>
-        <select id="eventMonth"></select>
-        <select id="eventYear"></select>
-        <label><input type="checkbox" id="allDayToggle" onchange="toggleTime()"> All Day</label>
-        <input type="time" id="eventTime">
-        <label><input type="checkbox" id="notifToggle"> Notification</label>
-        <select id="notifTime">
-            <option value="30">30 mins before</option>
-            <option value="15">15 mins before</option>
-            <option value="0">On start</option>
-        </select>
-        <button onclick="saveEvent()">Save</button>
-        <button onclick="closeEventPopup()">Cancel</button>
-    </div>
+    <h2>Leaper Calendar</h2>
+    <input type="datetime-local" id="date">
+    <input type="text" id="event" placeholder="Enter event">
+    <button onclick="saveEvent()">Save</button>
+    <h3>Events</h3>
+    <ul id="eventsList"></ul>
 
     <script>
-        function generateCalendar() {
-            let month = document.getElementById("monthDropdown").value;
-            let year = document.getElementById("yearDropdown").value;
-            let daysInMonth = new Date(year, month, 0).getDate();
-            let calendar = document.getElementById("calendar");
-            calendar.innerHTML = "";
-            for (let i = 1; i <= daysInMonth; i++) {
-                let day = document.createElement("div");
-                day.classList.add("day");
-                day.innerText = i;
-                day.onclick = () => openEventPopup(i);
-                if (localStorage.getItem(`${year}-${month}-${i}`)) {
-                    let dot = document.createElement("div");
-                    dot.classList.add("event-dot");
-                    day.appendChild(dot);
-                }
-                calendar.appendChild(day);
+        function saveEvent() {
+            let date = document.getElementById("date").value;
+            let event = document.getElementById("event").value;
+            if (!date || !event) return;
+
+            let events = JSON.parse(localStorage.getItem("events")) || {};
+            events[date] = event;
+            localStorage.setItem("events", JSON.stringify(events));
+            loadEvents();
+        }
+
+        function loadEvents() {
+            let events = JSON.parse(localStorage.getItem("events")) || {};
+            let list = document.getElementById("eventsList");
+            list.innerHTML = "";
+            for (let date in events) {
+                let li = document.createElement("li");
+                li.textContent = `${date}: ${events[date]}`;
+                list.appendChild(li);
             }
         }
 
-        function openEventPopup(day = null) {
-            document.getElementById("eventPopup").style.display = "flex";
-            document.getElementById("overlay").style.display = "block";
-            if (day) document.getElementById("eventDay").value = day;
-        }
-
-        function closeEventPopup() {
-            document.getElementById("eventPopup").style.display = "none";
-            document.getElementById("overlay").style.display = "none";
-        }
-
-        function saveEvent() {
-            let name = document.getElementById("eventName").value;
-            let desc = document.getElementById("eventDesc").value;
-            let day = document.getElementById("eventDay").value;
-            let month = document.getElementById("eventMonth").value;
-            let year = document.getElementById("eventYear").value;
-            let time = document.getElementById("eventTime").value;
-            let notify = document.getElementById("notifToggle").checked ? document.getElementById("notifTime").value : null;
-
-            localStorage.setItem(`${year}-${month}-${day}`, JSON.stringify({ name, desc, time, notify }));
-            closeEventPopup();
-            generateCalendar();
-            alert("Event saved!");
-        }
-
-        function toggleTime() {
-            document.getElementById("eventTime").disabled = document.getElementById("allDayToggle").checked;
-        }
-
-        function openSettings() {
-            alert("Settings (Coming Soon)");
-        }
-
-        function loadDropdowns() {
-            let monthDropdown = document.getElementById("monthDropdown");
-            let yearDropdown = document.getElementById("yearDropdown");
-            for (let i = 1; i <= 12; i++) monthDropdown.innerHTML += `<option value="${i}">${i}</option>`;
-            for (let i = 2020; i <= 2030; i++) yearDropdown.innerHTML += `<option value="${i}">${i}</option>`;
-        }
-
-        loadDropdowns();
-        generateCalendar();
+        loadEvents();
     </script>
-
 </body>
 </html>
