@@ -20,6 +20,7 @@
             width: 100vw;
             height: 100vh;
             background: white;
+            cursor: grab;
         }
         .toolbar {
             position: fixed;
@@ -71,21 +72,25 @@
 
     <!-- Toolbar -->
     <div class="toolbar">
-        <p>Leaperboard</p>
+<p>leaperBoard</p>
         <button onclick="setMode('pen')">✏️</button>
         <button onclick="setMode('eraser')">🧽</button>
-        <button onclick="window.location.href='services.html'">Return</button>
+<button onclick="enableTextMode()">🔤</button>
+        <button onclick="window.location.href='services.html'">🔙</button>
         <input type="color" id="color" value="#000000">
         <input type="range" id="thickness" min="1" max="10" value="2">
+        
     </div>
 
     <!-- Overflow Menu -->
     <button class="menu-button" onclick="toggleMenu()">☰</button>
     <div class="overflow-menu" id="overflowMenu">
+<p>Font size:<input type="number" id="fontSize" value="20" min="10" max="50"></p>
         <button onclick="undo()">↩️ Undo</button>
-        <button onclick="enableTextMode()">🔤 Add Text</button>
+        
         <button onclick="downloadCanvas()">📥 Download</button>
         <button onclick="clearCanvas()">🗑️ Clear</button>
+        <button onclick="toggleGrid()">Draw Grid/Clear</button>
         <input type="color" id="bgColor" value="#ffffff" onchange="changeBgColor()">
     </div>
 
@@ -95,10 +100,22 @@
         let isDrawing = false, mode = "pen";
         let drawingHistory = [];
         let textMode = false;
+        let showGrid = false;
+        const MAX_HISTORY = 20; // Undo history limit
+
+        // Moveable Canvas Variables
+        let isDragging = false;
+        let offsetX = 0, offsetY = 0;
+        let startX = 0, startY = 0;
+
+        // Zoom Variables
+        let scale = 1;
+        let translateX = 0, translateY = 0;
 
         function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
+            if (showGrid) drawGrid();
             saveState();
         }
         resizeCanvas();
@@ -107,10 +124,15 @@
         function setMode(newMode) {
             mode = newMode;
             textMode = false;
+            if (mode === "eraser") {
+                ctx.globalCompositeOperation = "destination-out";
+            } else {
+                ctx.globalCompositeOperation = "source-over";
+            }
         }
 
         function getPos(e) {
-            return e.touches ? { x: e.touches[0].clientX, y: e.touches[0].clientY } : { x: e.clientX, y: e.clientY };
+            return e.touches ? { x: e.touches[0].clientX - offsetX, y: e.touches[0].clientY - offsetY } : { x: e.clientX - offsetX, y: e.clientY - offsetY };
         }
 
         function startDrawing(e) {
@@ -146,23 +168,38 @@
 
         function clearCanvas() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (showGrid) drawGrid();
             drawingHistory = [];
         }
 
         function downloadCanvas() {
+            const tempCanvas = document.createElement("canvas");
+            const tempCtx = tempCanvas.getContext("2d");
+            tempCanvas.width = canvas.width;
+            tempCanvas.height = canvas.height;
+
+            // Fill background color
+            tempCtx.fillStyle = canvas.style.background;
+            tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+
+            // Draw the current canvas content
+            tempCtx.drawImage(canvas, 0, 0);
+
+            // Download
             const link = document.createElement("a");
             link.download = "leaperboard.png";
-            link.href = canvas.toDataURL();
+            link.href = tempCanvas.toDataURL();
             link.click();
         }
 
         function changeBgColor() {
-            canvas.style.background = document.getElementById("bgColor").value;
+            const bgColor = document.getElementById("bgColor").value;
+            canvas.style.background = bgColor;
         }
 
         function saveState() {
             drawingHistory.push(canvas.toDataURL());
-            if (drawingHistory.length > 10) drawingHistory.shift();
+            if (drawingHistory.length > MAX_HISTORY) drawingHistory.shift();
         }
 
         function undo() {
@@ -173,6 +210,7 @@
                 img.onload = () => {
                     ctx.clearRect(0, 0, canvas.width, canvas.height);
                     ctx.drawImage(img, 0, 0);
+                    if (showGrid) drawGrid();
                 };
             }
         }
@@ -186,9 +224,9 @@
             const input = document.createElement("input");
             input.type = "text";
             input.style.position = "absolute";
-            input.style.left = `${x}px`;
-            input.style.top = `${y}px`;
-            input.style.font = "20px monospace";
+            input.style.left = `${x + offsetX}px`;
+            input.style.top = `${y + offsetY}px`;
+            input.style.font = `${document.getElementById("fontSize").value}px monospace`;
             input.style.background = "transparent";
             input.style.color = document.getElementById("color").value;
             input.style.border = "none";
@@ -198,10 +236,13 @@
             input.addEventListener("keydown", function(event) {
                 if (event.key === "Enter") {
                     ctx.fillStyle = document.getElementById("color").value;
-                    ctx.font = "20px monospace";
+                    ctx.font = `${document.getElementById("fontSize").value}px monospace`;
                     ctx.fillText(this.value, x, y);
                     document.body.removeChild(this);
                     saveState();
+                    textMode = false;
+                } else if (event.key === "Escape") {
+                    document.body.removeChild(this);
                     textMode = false;
                 }
             });
@@ -210,15 +251,90 @@
             input.focus();
         }
 
+        function drawGrid() {
+            const gridSize = 20;
+            ctx.strokeStyle = "#ddd";
+            ctx.lineWidth = 1;
+            for (let x = 0; x <= canvas.width; x += gridSize) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+                ctx.stroke();
+            }
+            for (let y = 0; y <= canvas.height; y += gridSize) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvas.width, y);
+                ctx.stroke();
+            }
+        }
+
+        function toggleGrid() {
+            showGrid = !showGrid;
+            if (showGrid) drawGrid();
+            else clearCanvas();
+        }
+
+        // Moveable Canvas Logic
+        canvas.addEventListener("mousedown", (e) => {
+            if (e.button === 1 || e.ctrlKey) { // Middle mouse button or Ctrl + Left click
+                isDragging = true;
+                startX = e.clientX - offsetX;
+                startY = e.clientY - offsetY;
+                canvas.style.cursor = "grabbing";
+            }
+        });
+
+        canvas.addEventListener("mousemove", (e) => {
+            if (isDragging) {
+                offsetX = e.clientX - startX;
+                offsetY = e.clientY - startY;
+                ctx.setTransform(1, 0, 0, 1, offsetX, offsetY);
+            }
+        });
+
+        canvas.addEventListener("mouseup", () => {
+            isDragging = false;
+            canvas.style.cursor = "grab";
+        });
+
+        canvas.addEventListener("mouseleave", () => {
+            isDragging = false;
+            canvas.style.cursor = "grab";
+        });
+
+        // Zoom Functions
+        function zoomIn() {
+            scale *= 1.1;
+            ctx.scale(1.1, 1.1);
+        }
+
+        function zoomOut() {
+            scale /= 1.1;
+            ctx.scale(1 / 1.1, 1 / 1.1);
+        }
+
         // Mouse events
         canvas.addEventListener("mousedown", startDrawing);
         canvas.addEventListener("mousemove", draw);
         canvas.addEventListener("mouseup", stopDrawing);
 
         // Touch events (for mobile)
-        canvas.addEventListener("touchstart", startDrawing);
-        canvas.addEventListener("touchmove", draw);
+        canvas.addEventListener("touchstart", (e) => {
+            e.preventDefault();
+            startDrawing(e);
+        });
+        canvas.addEventListener("touchmove", (e) => {
+            e.preventDefault();
+            draw(e);
+        });
         canvas.addEventListener("touchend", stopDrawing);
+
+        // Keyboard shortcuts
+        document.addEventListener("keydown", (e) => {
+            if (e.ctrlKey && e.key === "z") undo();
+            if (e.ctrlKey && e.key === "s") downloadCanvas();
+        });
     </script>
 </body>
 </html>
